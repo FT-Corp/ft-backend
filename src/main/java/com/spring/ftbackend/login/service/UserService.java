@@ -10,10 +10,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User register(String username, String password) {
+    public User register(String username, String password,String nickName) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+        user.setNickName(nickName);
         return userRepository.save(user);
     }
 

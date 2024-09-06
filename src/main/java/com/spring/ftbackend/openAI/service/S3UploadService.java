@@ -1,11 +1,10 @@
-package com.spring.ftbackend.openAI.configuration;
+package com.spring.ftbackend.openAI.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +34,7 @@ public class S3UploadService {
         connection.setRequestMethod("GET");
 
         try (InputStream inputStream = connection.getInputStream()) {
-            String fileName = "test.png";
+            String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(connection.getContentLengthLong());
             metadata.setContentType(connection.getContentType());

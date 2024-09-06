@@ -2,7 +2,7 @@ package com.spring.ftbackend.book.service;
 
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.model.Book;
-import com.spring.ftbackend.openAI.OpenAiService;
+import com.spring.ftbackend.openAI.service.OpenAiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +29,8 @@ public class BookService {
     }
 
     //db에 책을 넣음
-    public void addBook(String bookname, int pageNumber, String content) {
-        bookRepository.save(new Book(bookname, pageNumber,content));
+    public void addBook(String bookname, int pageNumber, String content,String imageUrl) {
+        bookRepository.save(new Book(bookname, pageNumber,content,imageUrl));
     }
 
     // 텍스트를 문장 단위로 자르고 각 리스트 항목이 maxLength자 이하로 구성되도록 나누는 함수

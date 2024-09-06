@@ -15,7 +15,7 @@ public class Book {
 
     @Column(columnDefinition = "TEXT")
     private String pageContent; // 페이지 내용
-
+    @Column(length = 1000)
     private String imageUrl; // 이미지 URL
 
     // 기본 생성자

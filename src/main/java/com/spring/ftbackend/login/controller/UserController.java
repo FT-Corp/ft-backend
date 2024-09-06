@@ -21,7 +21,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserLoginRegistrationRequest request) {
         try {
-            userService.register(request.getUsername(), request.getPassword());
+            userService.register(request.getUsername(), request.getPassword(),request.getNickName());
             return ResponseEntity.ok("User registered successfully.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
