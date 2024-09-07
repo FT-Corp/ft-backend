@@ -1,6 +1,8 @@
 package com.spring.ftbackend.login.model;
 
+import com.spring.ftbackend.login.Repository.JsonConverter;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,6 +18,10 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Convert(converter = JsonConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<String> myBooks;
 
     public Long getId() {
         return id;
@@ -47,5 +53,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<String> getMyBooks() {
+        return myBooks;
+    }
+
+    public void setMyBooks(List<String> myBooks) {
+        this.myBooks = myBooks;
     }
 }

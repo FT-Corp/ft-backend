@@ -57,4 +57,14 @@ public class BookService {
 
         return parts;
     }
+
+    public List<Book> findBooksWithPageNumberZero() {
+        return bookRepository.findBooksWithPageNumberZero();
+    }
+
+    // 책 이름과 페이지 번호가 0인 책을 찾는 메서드
+    public List<Book> findBooksByNameAndPageZero(String bookName) {
+        // 책 이름과 페이지 번호가 0인 책을 조회
+        return bookRepository.findByBookNameAndPageNumber(bookName, 0);
+    }
 }

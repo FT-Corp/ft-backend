@@ -26,8 +26,8 @@ public class OpenAiService {
 
         // GPT-4o-mini용 채팅 모델 설정
         var openAiChatOptionsGPT4 = OpenAiChatOptions.builder()
-                .withModel("gpt-4o-mini")  // GPT-4o-mini 모델 사용
-                .withTemperature(0.4F)
+                .withModel("gpt-4o")  // GPT-4o 모델 사용
+                .withTemperature(0.7F)
                 .withMaxTokens(200)
                 .build();
         this.chatModel = new OpenAiChatModel(openAiApi, openAiChatOptionsGPT4);
@@ -53,10 +53,10 @@ public class OpenAiService {
         Map<String, Object> body = new HashMap<>();
         body.put("prompt", prompt+"에 해당하는 동화책 이미지 생성해줘");
         body.put("n", 1); // 생성할 이미지 수
-        body.put("size", "256x256"); // 이미지 크기
+        body.put("size", "1024x1024"); // 이미지 크기
         body.put("quality", "standard");
-        body.put("model","dall-e-2");
-//        body.put("model","dall-e-3");
+//        body.put("model","dall-e-2");
+        body.put("model","dall-e-3");
 
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
