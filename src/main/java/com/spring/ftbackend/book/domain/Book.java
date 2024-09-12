@@ -1,8 +1,11 @@
-package com.spring.ftbackend.book.model;
+package com.spring.ftbackend.book.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter
 public class Book {
 
     @Id
@@ -35,44 +38,4 @@ public class Book {
         this.pageContent = content;
     }
 
-    // Getter 및 Setter 메서드
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String name) {
-        this.bookName = name;
-    }
-
-    public int getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public String getPageContent() {
-        return pageContent;
-    }
-
-    public void setPageContent(String pageContent) {
-        this.pageContent = pageContent;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

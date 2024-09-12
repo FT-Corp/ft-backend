@@ -1,8 +1,8 @@
 package com.spring.ftbackend.book.controller;
 
-import com.spring.ftbackend.book.model.Book;
+import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.service.BookService;
-import com.spring.ftbackend.login.model.User;
+import com.spring.ftbackend.login.domain.User;
 import com.spring.ftbackend.login.service.UserService;
 import com.spring.ftbackend.openAI.service.OpenAiService;
 import com.spring.ftbackend.openAI.service.S3UploadService;

@@ -1,7 +1,7 @@
 package com.spring.ftbackend.login.service;
 
 import com.spring.ftbackend.login.Repository.UserRepository;
-import com.spring.ftbackend.login.model.User;
+import com.spring.ftbackend.login.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

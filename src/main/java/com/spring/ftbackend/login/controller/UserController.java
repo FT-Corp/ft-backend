@@ -1,7 +1,7 @@
 package com.spring.ftbackend.login.controller;
 
 import com.spring.ftbackend.login.dto.UserLoginRegistrationRequest;
-import com.spring.ftbackend.login.model.User;
+import com.spring.ftbackend.login.domain.User;
 import com.spring.ftbackend.login.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

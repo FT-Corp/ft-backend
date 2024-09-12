@@ -1,7 +1,7 @@
 package com.spring.ftbackend.book.service;
 
 import com.spring.ftbackend.book.Repository.BookRepository;
-import com.spring.ftbackend.book.model.Book;
+import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.openAI.service.OpenAiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.spring.ftbackend.book.Repository;
 
-import com.spring.ftbackend.book.model.Book;
+import com.spring.ftbackend.book.domain.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

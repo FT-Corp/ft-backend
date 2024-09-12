@@ -1,10 +1,6 @@
 package com.spring.ftbackend.openAI.controller;
 
 import com.spring.ftbackend.openAI.service.OpenAiService;
-import org.springframework.ai.openai.OpenAiChatModel;
-
-import org.springframework.ai.openai.OpenAiChatOptions;
-import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

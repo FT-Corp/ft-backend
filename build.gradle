@@ -35,7 +35,8 @@ dependencies {
 //    // Amazon S3 의존성 추가
 //    implementation("software.amazon.awssdk:s3")
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-    implementation 'org.antlr:antlr4:4.13.1'  // 최신 버전으로 통일
+    implementation 'org.antlr:antlr4:4.13.1'
+    implementation 'org.projectlombok:lombok'// 최신 버전으로 통일
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
