@@ -1,21 +1,29 @@
 package com.spring.ftbackend.book.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter @Setter
+@ToString
 public class BookPages {
 
     @Id
-    private Long book_page_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
+    private Long bookPageId;
 
-    private Long book_id;
-    private Long page_number;
+    @ManyToOne
+    @JoinColumn(name = "book_id",nullable = false)
+    @JsonIgnore
+    private Book book;
+
+    private Long pageNumber;
     @Column (columnDefinition = "TEXT")
-    private String page_content;
+    private String pageContent;
+    @Column (length = 1000)
     private String image_url;
 }

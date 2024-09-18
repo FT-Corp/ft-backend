@@ -1,13 +1,20 @@
 package com.spring.ftbackend.book.service;
 
+import com.spring.ftbackend.book.Repository.BookPagesRepository;
 import com.spring.ftbackend.book.Repository.BookRepository;
+import com.spring.ftbackend.book.Repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
+import com.spring.ftbackend.book.domain.BookPages;
+import com.spring.ftbackend.book.dto.BookDto;
+import com.spring.ftbackend.login.Repository.UserRepository;
 import com.spring.ftbackend.openAI.service.OpenAiService;
+import com.spring.ftbackend.s3.service.S3UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -15,25 +22,58 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
     @Autowired
+    private BookPagesRepository bookPagesRepository;
+    @Autowired
     private OpenAiService openAiService;
+    @Autowired
+    private S3UploadService s3UploadService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private UserBooksRepository userBooksRepository;
 
+    //표지생성후 s3에 업로드하고 url을 반환하는 메서드
+    public void bookCoverMake(String bookname, String author) throws IOException {
+        String imageUrl = openAiService.generateImage(bookname);
+        String s3url = s3UploadService.uploadFileFromUrl(imageUrl);
+        bookRepository.save(new Book(bookname, author, s3url));
+    }
 
+    // 책 내용을 생성하고 페이지별로 나누어 s3에 업로드하고 db에 저장하는 메서드
+    public void addBookPage(String bookname,String author, Integer maxlength) throws IOException {
+        String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+        List<String> bookSplitList = splitText(gptApiResponse, maxlength);
+        System.out.println("생성할 페이지 수:" + bookSplitList.size());
+        // 각 페이지에 대해 이미지를 생성해 s3에 업로드하고 db에 저장
+        for (int i = 0;i<bookSplitList.size();i++){
+            String part = bookSplitList.get(i);
+            // 페이지별 이미지 생성
+            String imageUrl = openAiService.generateImage(part);
+            // 생성한 이미지 s3에 업로드
+            String s3url = s3UploadService.uploadFileFromUrl(imageUrl);
 
-    public String content = "옛날에 프랑스라는 나라에 장 발장이라는 사람이 있었어요. 그는 매우 가난했기 때문에 굶주린 조카들을 먹이기 위해 빵을 훔쳤어요. 하지만 이 때문에 그는 감옥에 가게 되었어요. 장 발장은 오랜 시간 감옥에서 일하다가 마침내 석방되었어요. 하지만 사람들은 그를 도둑으로만 생각하고 받아주지 않았어요. 그러던 어느 날, 장 발장은 한 친절한 신부님을 만나게 되었어요. 그 신부님은 장 발장이 다시 새로운 삶을 살 수 있도록 은촛대를 주었어요. 이 경험은 장 발장의 마음을 크게 바꿨고, 그는 나쁜 사람이 아니라 착한 사람으로 살기로 결심했어요. 장 발장은 이름을 바꾸고 다른 도시로 가서 성공한 사람이 되었어요. 그는 그 도시 사람들을 돕고, 공장이 망하지 않도록 도와줬어요. 하지만 경찰관 자베르라는 사람이 장 발장을 계속 의심하고 잡으려고 했어요. 자베르는 법을 매우 중요하게 생각하는 사람이었어요. 그러던 중, 장 발장은 어린 소녀 코제트를 만나게 되었어요. 코제트는 매우 불쌍한 소녀였어요. 그녀의 엄마는 코제트를 키울 수 없어서 다른 사람에게 맡겼는데, 그 사람들은 코제트를 못살게 굴었어요. 장 발장은 코제트를 불쌍히 여겨서 그녀를 돌보기로 했어요. 장 발장과 코제트는 서로를 가족처럼 아끼고 사랑하게 되었어요. 하지만 자베르는 여전히 장 발장을 쫓고 있었어요. 장 발장은 코제트를 보호하면서 도망쳐야 했어요. 한편, 프랑스에서는 젊은이들이 혁명을 준비하고 있었어요. 코제트는 그중 한 청년 마리우스와 사랑에 빠지게 되었어요. 장 발장은 코제트가 행복하길 바랐기 때문에 마리우스를 돕기로 했어요. 마침내, 장 발장은 자베르와 마주치게 되었어요. 하지만 장 발장은 자베르를 용서하고 풀어주었어요. 이로 인해 자베르는 큰 충격을 받고 고민 끝에 스스로 목숨을 끊게 돼요. 결국, 장 발장은 코제트와 마리우스의 행복을 지켜보면서 조용히 세상을 떠나게 돼요. 그는 마지막까지 다른 사람들을 돕고 사랑하며 살았답니다. 이렇게 레 미제라블은 어려운 상황 속에서도 착한 마음을 잃지 않고, 사랑과 용서를 통해 세상을 바꿀 수 있다는 중요한 교훈을 담고 있어요.";
-    //db에 책이 있는지 확인
-    public boolean checkBook(String bookname) {
-        if (bookRepository.findByBookName(bookname).isEmpty()) {
-            return false;
+            // BookPages 테이블에 저장
+            BookPages bookPage = new BookPages();
+            Book book = bookRepository.findByBookName(bookname).get();
+            bookPage.setBook(book);
+            bookPage.setPageContent(part);
+            bookPage.setPageNumber((long) (i+1));
+            bookPage.setImage_url(s3url);
+            bookPagesRepository.save(bookPage);
+
+            System.out.println("페이지"+(i+1)+"/"+bookSplitList.size()+"생성 완료");
+
+            // 20초(20,000밀리초) 대기
+            try {
+                Thread.sleep(20000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        return true;
     }
 
-    //db에 책을 넣음
-    public void addBook(String bookname, int pageNumber, String content,String imageUrl) {
-        bookRepository.save(new Book(bookname, pageNumber,content,imageUrl));
-    }
 
-    // 텍스트를 문장 단위로 자르고 각 리스트 항목이 maxLength자 이하로 구성되도록 나누는 함수
+    // 텍스트를 문장 단위로 자르고 각 리스트 항목이 maxLength자 이하로 구성되도록 나누는 메서드
     public static List<String> splitText(String text, int maxLength) {
         String[] sentences = text.split("(?<=\\.)"); // 문장 단위로 자르기
         List<String> parts = new ArrayList<>();
@@ -58,13 +98,50 @@ public class BookService {
         return parts;
     }
 
-    public List<Book> findBooksWithPageNumberZero() {
-        return bookRepository.findBooksWithPageNumberZero();
+    // 사용자가 갖고 있는 책 리스트 반환
+    public List<BookDto> BookDtoList(Long userId) {
+        List<Book> Book = userBooksRepository.findBooksByUserId(userId);
+        List<BookDto> collect = Book.stream().map(fields -> {
+            BookDto bookDto = new BookDto();
+            bookDto.setBookId(fields.getBookId());
+            bookDto.setBookName(fields.getBookName());
+            bookDto.setAuthor(fields.getAuthor());
+            bookDto.setCoverImageUrl(fields.getCoverImageUrl());
+            return bookDto;
+        }).collect(Collectors.toList());
+        return collect;
     }
 
-    // 책 이름과 페이지 번호가 0인 책을 찾는 메서드
-    public List<Book> findBooksByNameAndPageZero(String bookName) {
-        // 책 이름과 페이지 번호가 0인 책을 조회
-        return bookRepository.findByBookNameAndPageNumber(bookName, 0);
+    // 사용자가 갖고 있는 책 갯수 반환
+    public int userBooksCount(Long userId) {
+        List<Book> Book = userBooksRepository.findBooksByUserId(userId);
+        return Book.size();
+    }
+
+    // db에 있는 모든 책 리스트 반환
+    public List<Map<String, String>> allBookList() {
+        List<Object[]> bookFields = bookRepository.findAllBookFields();
+        return bookFields.stream().map(fields -> {
+            Map<String, String> bookMap = new HashMap<>();
+            bookMap.put("bookName", (String) fields[0]);
+            bookMap.put("author", (String) fields[1]);
+            bookMap.put("coverImageUrl", (String) fields[2]);
+            return bookMap;
+        }).collect(Collectors.toList());
+    }
+
+    // 책이 book테이블 db에 있는지 확인
+    public boolean findBook(String bookName, String author) {
+        return bookRepository.existsByBookNameAndAuthor(bookName, author);
+    }
+
+    // 책이 book테이블에 있고 사용자가 가지고 있는지 확인
+    public boolean findBookInUser(Long userId, String bookName) {
+        Long bookId = bookRepository.findByBookName(bookName).get().getBookId();
+        return userBooksRepository.existsByUserIdAndBookId(userId, bookId);
+    }
+
+    public Long findBookIdByBookName(String bookName) {
+        return bookRepository.findBookIdByBookName(bookName);
     }
 }

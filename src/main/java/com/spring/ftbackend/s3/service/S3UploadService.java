@@ -1,4 +1,4 @@
-package com.spring.ftbackend.openAI.service;
+package com.spring.ftbackend.s3.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;

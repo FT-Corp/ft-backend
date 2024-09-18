@@ -27,8 +27,7 @@ public class OpenAiService {
         // GPT-4o-mini용 채팅 모델 설정
         var openAiChatOptionsGPT4 = OpenAiChatOptions.builder()
                 .withModel("gpt-4o")  // GPT-4o 모델 사용
-                .withTemperature(0.7F)
-                .withMaxTokens(200)
+//                .withTemperature(0.7F)
                 .build();
         this.chatModel = new OpenAiChatModel(openAiApi, openAiChatOptionsGPT4);
     }

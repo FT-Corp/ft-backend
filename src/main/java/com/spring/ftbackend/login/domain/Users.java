@@ -1,6 +1,6 @@
 package com.spring.ftbackend.login.domain;
 
-import com.spring.ftbackend.login.Repository.JsonConverter;
+import com.spring.ftbackend.book.domain.UserBooks;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,23 +8,22 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
 @Getter @Setter
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
+    @Column(nullable = false)
     private String nickName;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Convert(converter = JsonConverter.class)
-    @Column(columnDefinition = "TEXT")
-    private List<String> myBooks;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<UserBooks> userBooks;
 
 }

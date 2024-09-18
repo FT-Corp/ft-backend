@@ -1,4 +1,4 @@
-package com.spring.ftbackend.openAI.configuration;
+package com.spring.ftbackend.s3.configuration;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

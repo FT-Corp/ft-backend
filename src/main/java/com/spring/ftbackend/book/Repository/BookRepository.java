@@ -6,19 +6,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     // 책 이름으로 검색하는 메서드
-    List<Book> findByBookName(String bookName);
+    Optional<Book> findByBookName(String bookName);
 
-    // 페이지 번호로 검색하는 메서드
-    List<Book> findByPageNumber(int pageNumber);
-    // 또는 @Query 사용하여 명시적으로 정의할 수 있습니다.
-    @Query("SELECT b FROM Book b WHERE b.pageNumber = 0")
-    List<Book> findBooksWithPageNumberZero();
+    // 책 이름으로 bookId를 찾는 메서드
+    @Query("SELECT b.bookId FROM Book b WHERE b.bookName = :bookName")
+    Long findBookIdByBookName(String bookName);
 
-    // 책 이름과 페이지 번호로 책 찾기
-    List<Book> findByBookNameAndPageNumber(String bookName, int pageNumber);
+    // bookname,author,cover_image_url 만 가져오는 쿼리
+    @Query("SELECT b.bookName, b.author, b.coverImageUrl FROM Book b")
+    List<Object[]> findAllBookFields();
+
+    // 책 이름과 저자로 책이 존재하는지 확인하는 메서드
+    boolean existsByBookNameAndAuthor(String bookName, String author);
+
 }

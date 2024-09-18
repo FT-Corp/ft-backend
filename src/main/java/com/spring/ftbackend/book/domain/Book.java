@@ -4,38 +4,35 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter @Setter
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment primary key
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookId;
 
     private String bookName; // 책 이름
+    private String author;
 
-    private int pageNumber; // 페이지 번호
-
-    @Column(columnDefinition = "TEXT")
-    private String pageContent; // 페이지 내용
     @Column(length = 1000)
-    private String imageUrl; // 이미지 URL
+    private String coverImageUrl; // 책 표지 이미지
 
-    // 기본 생성자
-    public Book() {}
+    @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<BookPages> pages;
 
-    // 모든 필드를 사용하는 생성자
-    public Book(String name, int pageNumber, String pageContent, String imageUrl) {
-        this.bookName = name;
-        this.pageNumber = pageNumber;
-        this.pageContent = pageContent;
-        this.imageUrl = imageUrl;
+    @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<UserBooks> userBooks;
+
+    public Book() {
     }
 
-    public Book(String bookname, int pageNumber, String content) {
-        this.bookName = bookname;
-        this.pageNumber = pageNumber;
-        this.pageContent = content;
+    public Book( String bookName,String author,String coverImageUrl) {
+        this.bookName = bookName;
+        this.author = author;
+        this.coverImageUrl = coverImageUrl;
     }
 
 }
