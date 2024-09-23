@@ -31,6 +31,5 @@ public class TestCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 //        userService.register("asdf","1234","aa");
-//        System.out.println(bookRepository.findBookIdByBookName("어린왕자"));
     }
 }
