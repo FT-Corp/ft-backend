@@ -1,5 +1,6 @@
 package com.spring.ftbackend.book.domain;
 
+import com.spring.ftbackend.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-public class Book {
+public class Book extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
