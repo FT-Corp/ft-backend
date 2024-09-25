@@ -25,4 +25,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     // 책 이름과 저자로 책이 존재하는지 확인하는 메서드
     boolean existsByBookNameAndAuthor(String bookName, String author);
 
+    // 책 이름과 저자로 검색하는 메서드
+    Optional<Book> findByBookNameAndAuthor(String bookName, String author);
 }

@@ -1,5 +1,6 @@
 package com.spring.ftbackend;
 
+import com.spring.ftbackend.book.Repository.BookPagesRepository;
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.service.BookService;
 import com.spring.ftbackend.login.domain.Users;
@@ -21,6 +22,9 @@ public class TestCommandLineRunner implements CommandLineRunner {
     private BookRepository bookRepository;
 
     @Autowired
+    private BookPagesRepository bookPagesRepository;
+
+    @Autowired
     private OpenAiService openAiService;
 
     @Autowired
@@ -31,5 +35,6 @@ public class TestCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 //        userService.register("asdf","1234","aa");
+//        System.out.println(bookPagesRepository.existsByBook_BookId(21L));
     }
 }

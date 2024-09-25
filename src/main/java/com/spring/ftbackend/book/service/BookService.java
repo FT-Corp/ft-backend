@@ -33,10 +33,12 @@ public class BookService {
     private UserBooksRepository userBooksRepository;
 
     //표지생성후 s3에 업로드하고 url을 반환하는 메서드
-    public void bookCoverMake(String bookname, String author) throws IOException {
+    public String bookCoverMake(String bookname, String author) throws IOException {
         String imageUrl = openAiService.generateImage(bookname);
         String s3url = s3UploadService.uploadFileFromUrl(imageUrl);
         bookRepository.save(new Book(bookname, author, s3url));
+
+        return s3url;
     }
 
     // 책 내용을 생성하고 페이지별로 나누어 s3에 업로드하고 db에 저장하는 메서드
@@ -144,4 +146,18 @@ public class BookService {
     public Long findBookIdByBookName(String bookName) {
         return bookRepository.findBookIdByBookName(bookName);
     }
+    // 책 이름,저자로 책의 표지 이미지 url을 반환
+    public String findCoverImageUrlByBookName(String bookName,String author) {
+        return bookRepository.findByBookNameAndAuthor(bookName,author).get().getCoverImageUrl();
+    }
+
+    // 책 이름이 bookpages테이블에 존재하는지 확인
+    public boolean findBookPagesByBookName(String bookName) {
+
+        // 책 이름으로 bookId를 찾음
+        Long bookId = bookRepository.findBookIdByBookName(bookName);
+        // bookId가 bookpages테이블에 존재하는지 확인
+        return bookPagesRepository.existsByBook_BookId(bookId);
+    }
+
 }
