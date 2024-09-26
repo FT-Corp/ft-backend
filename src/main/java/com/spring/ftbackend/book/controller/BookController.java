@@ -151,7 +151,7 @@ public class BookController {
         String author = request.get("author");
 
         //책이 db에 있는지 확인
-        if(bookService.findBook(bookName,author)){
+        if (bookService.findBook(bookName,author)){
             //사용자가 책을 가지고 있는지 확인
             boolean bookInUser = bookService.findBookInUser(Long.valueOf(userId), bookName);
             if (bookInUser) {

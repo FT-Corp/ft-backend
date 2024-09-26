@@ -3,6 +3,7 @@ package com.spring.ftbackend;
 import com.spring.ftbackend.book.Repository.BookPagesRepository;
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.service.BookService;
+import com.spring.ftbackend.gemini.service.GeminiService;
 import com.spring.ftbackend.login.domain.Users;
 import com.spring.ftbackend.login.service.UserService;
 import com.spring.ftbackend.openAI.service.OpenAiService;
@@ -32,9 +33,16 @@ public class TestCommandLineRunner implements CommandLineRunner {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private GeminiService GeminiService;
+    @Autowired
+    private GeminiService geminiService;
+
     @Override
     public void run(String... args) throws Exception {
+//        geminiService.gemini("데미안", "헤르만 헤세");
 //        userService.register("asdf","1234","aa");
 //        System.out.println(bookPagesRepository.existsByBook_BookId(21L));
+//        System.out.println(aiService.chat("데미안 동화책 만들어줘"));
     }
 }

@@ -6,6 +6,7 @@ import com.spring.ftbackend.book.Repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.BookPages;
 import com.spring.ftbackend.book.dto.BookDto;
+import com.spring.ftbackend.gemini.service.GeminiService;
 import com.spring.ftbackend.login.Repository.UserRepository;
 import com.spring.ftbackend.openAI.service.OpenAiService;
 import com.spring.ftbackend.s3.service.S3UploadService;
@@ -32,6 +33,9 @@ public class BookService {
     @Autowired
     private UserBooksRepository userBooksRepository;
 
+    @Autowired
+    private GeminiService geminiService;
+
     //표지생성후 s3에 업로드하고 url을 반환하는 메서드
     public String bookCoverMake(String bookname, String author) throws IOException {
         String imageUrl = openAiService.generateImage(bookname);
@@ -43,7 +47,8 @@ public class BookService {
 
     // 책 내용을 생성하고 페이지별로 나누어 s3에 업로드하고 db에 저장하는 메서드
     public void addBookPage(String bookname,String author, Integer maxlength) throws IOException {
-        String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+//        String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+        String gptApiResponse = geminiService.gemini(bookname, author);
         List<String> bookSplitList = splitText(gptApiResponse, maxlength);
         System.out.println("생성할 페이지 수:" + bookSplitList.size());
         // 각 페이지에 대해 이미지를 생성해 s3에 업로드하고 db에 저장
