@@ -1,5 +1,6 @@
 package com.spring.ftbackend.book.domain;
 
+import com.spring.ftbackend.common.entity.BaseEntity;
 import com.spring.ftbackend.login.domain.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class UserBooks {
+public class UserBooks extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userBookId;

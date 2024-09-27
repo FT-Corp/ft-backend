@@ -1,6 +1,7 @@
 package com.spring.ftbackend.book.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring.ftbackend.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import lombok.ToString;
 @Entity
 @Getter @Setter
 @ToString
-public class BookPages {
+public class BookPages extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
