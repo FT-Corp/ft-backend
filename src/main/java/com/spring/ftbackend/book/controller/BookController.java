@@ -45,9 +45,9 @@ public class BookController {
 
         String bookName = request.get("bookName");
         String author = request.get("author");
+
         //프론트에서 책 검색시 아래쪽에 카드띄우고 사진칸엔 로딩중 처리
         //책이 db에 있는지확인후 db에있으면 이미지반환
-        System.out.println(bookName+author);
         if(bookService.findBook(bookName,author)){
             response.put("imageUrl", bookService.findCoverImageUrlByBookName(bookName, author));
             return ResponseEntity.ok(response);
@@ -69,6 +69,7 @@ public class BookController {
         Long userId = request.get("userId");
 
         List<BookDto> bookList = bookService.BookDtoList(userId);
+        System.out.println(bookList);
         if (bookList != null) {
             System.out.println(bookList);
             return ResponseEntity.ok(bookList);
@@ -150,22 +151,23 @@ public class BookController {
         String bookName = request.get("bookName");
         String author = request.get("author");
 
-        //책이 db에 있는지 확인
-        if (bookService.findBook(bookName,author)){
-            //사용자가 책을 가지고 있는지 확인
-            boolean bookInUser = bookService.findBookInUser(Long.valueOf(userId), bookName);
-            if (bookInUser) {
-                return ResponseEntity.ok("Book found in db and user has it.");
-            } else{
-                //사용자가 책을 가지고 있지 않으면 UserBooks 테이블에 저장
-                userService.addBookToUser(Long.valueOf(userId), bookName);
-                return ResponseEntity.ok("Book found in db and added to user.");
-            }
-        }
+
+//        //책이 db에 있는지 확인
+//        if (bookService.findBook(bookName,author)){
+//            //사용자가 책을 가지고 있는지 확인
+//            boolean bookInUser = bookService.findBookInUser(Long.valueOf(userId), bookName);
+//            if (bookInUser) {
+//                return ResponseEntity.ok("Book found in db and user has it.");
+//            } else{
+//                //사용자가 책을 가지고 있지 않으면 UserBooks 테이블에 저장
+//                userService.addBookToUser(Long.valueOf(userId), bookName);
+//                return ResponseEntity.ok("Book found in db and added to user.");
+//            }
+//        }
         // UserBooks 테이블에 저장
         userService.addBookToUser(Long.valueOf(userId), bookName);
         // 책 내용이 없으면
-        if (bookService.findBookPagesByBookName(bookName)) {
+        if (!bookService.findBookPagesByBookName(bookName)) {
             // 책 내용 생성 후 BookPages 테이블에 저장
             bookService.addBookPage(bookName, author, 100);
         }

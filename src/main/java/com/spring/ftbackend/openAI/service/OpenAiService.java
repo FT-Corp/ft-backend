@@ -42,7 +42,7 @@ public class OpenAiService {
     //이미지 생성해주는 메소드
     public String generateImage(String prompt) {
         try {
-            return "https://files.oaiusercontent.com/file-fafrCJIF3RTPqqR2KQk0eCQp?se=2024-09-26T14%3A46%3A11Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Ddd3c4fd6-d78a-477d-80fc-73c3c99ad140.webp&sig=/kDRQ6c3D8q7rYQ1BCUZTOEPocxZSNE3ZnetLPpLwIY%3D";
+            return "https://th.bing.com/th/id/OIG1.wQ7nqzXG6LLji1s3MrOP";
         }
         catch (Exception e) {
         }

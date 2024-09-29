@@ -44,5 +44,6 @@ public class TestCommandLineRunner implements CommandLineRunner {
 //        userService.register("asdf","1234","aa");
 //        System.out.println(bookPagesRepository.existsByBook_BookId(21L));
 //        System.out.println(aiService.chat("데미안 동화책 만들어줘"));
+//        System.out.println(bookPagesRepository.existsByBook_BookId(9L));
     }
 }
