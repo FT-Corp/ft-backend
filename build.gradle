@@ -37,6 +37,9 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation 'software.amazon.awssdk:ssm:2.17.89'
 
+    // webClient
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     //AWS Parameter Store
     implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.2.0")
     implementation 'io.awspring.cloud:spring-cloud-aws-starter-sqs'
