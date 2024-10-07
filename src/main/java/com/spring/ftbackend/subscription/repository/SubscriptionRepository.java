@@ -1,8 +1,7 @@
-package com.spring.ftbackend.Subscription.repository;
+package com.spring.ftbackend.subscription.repository;
 
-import com.spring.ftbackend.Subscription.domain.Subscription;
+import com.spring.ftbackend.subscription.domain.Subscription;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 

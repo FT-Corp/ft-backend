@@ -1,11 +1,9 @@
-package com.spring.ftbackend.Subscription.service;
+package com.spring.ftbackend.subscription.service;
 
-import com.spring.ftbackend.Subscription.domain.Subscription;
-import com.spring.ftbackend.Subscription.dto.request.SubscriptionSaveRequestDto;
-import com.spring.ftbackend.Subscription.repository.SubscriptionRepository;
+import com.spring.ftbackend.subscription.domain.Subscription;
+import com.spring.ftbackend.subscription.dto.request.SubscriptionSaveRequestDto;
+import com.spring.ftbackend.subscription.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

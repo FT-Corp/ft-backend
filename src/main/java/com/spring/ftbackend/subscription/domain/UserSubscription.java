@@ -1,4 +1,4 @@
-package com.spring.ftbackend.Subscription.domain;
+package com.spring.ftbackend.subscription.domain;
 
 import com.spring.ftbackend.common.entity.BaseEntity;
 import com.spring.ftbackend.login.domain.Users;

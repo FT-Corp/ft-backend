@@ -1,17 +1,16 @@
-package com.spring.ftbackend.Subscription.service;
+package com.spring.ftbackend.subscription.service;
 
-import com.spring.ftbackend.Subscription.domain.Subscription;
-import com.spring.ftbackend.Subscription.domain.UserSubscription;
-import com.spring.ftbackend.Subscription.dto.request.UserSubscriptionInfoRequestDto;
-import com.spring.ftbackend.Subscription.dto.request.UserSubscriptionSaveRequestDto;
-import com.spring.ftbackend.Subscription.dto.response.UserSubscriptionInfoResponseDto;
-import com.spring.ftbackend.Subscription.repository.SubscriptionRepository;
-import com.spring.ftbackend.Subscription.repository.UserSubscriptionRepository;
+import com.spring.ftbackend.subscription.domain.Subscription;
+import com.spring.ftbackend.subscription.domain.UserSubscription;
+import com.spring.ftbackend.subscription.dto.request.UserSubscriptionInfoRequestDto;
+import com.spring.ftbackend.subscription.dto.request.UserSubscriptionSaveRequestDto;
+import com.spring.ftbackend.subscription.dto.response.UserSubscriptionInfoResponseDto;
+import com.spring.ftbackend.subscription.repository.SubscriptionRepository;
+import com.spring.ftbackend.subscription.repository.UserSubscriptionRepository;
 import com.spring.ftbackend.login.Repository.UserRepository;
 import com.spring.ftbackend.login.domain.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,6 +33,8 @@ public class UserSubscriptionService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         Subscription subscription = subscriptionRepository.findById(userSubscriptionSaveRequestDto.getSubscriptionId())
                 .orElseThrow(() -> new IllegalArgumentException("Subscription not found"));
+
+        //이미 구독중인 plan 조회
         Optional<UserSubscription> userSubscriptionOpt = userSubscriptionRepository.findUserSubscriptionByUserId(userSubscriptionSaveRequestDto.getUserId());
         if (userSubscriptionOpt.isPresent()) {
             return false;

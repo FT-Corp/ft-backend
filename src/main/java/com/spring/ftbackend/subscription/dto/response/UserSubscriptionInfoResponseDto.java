@@ -1,11 +1,8 @@
-package com.spring.ftbackend.Subscription.dto.response;
+package com.spring.ftbackend.subscription.dto.response;
 
-import com.spring.ftbackend.Subscription.domain.UserSubscription;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import com.spring.ftbackend.subscription.domain.UserSubscription;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 

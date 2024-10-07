@@ -1,4 +1,4 @@
-package com.spring.ftbackend.Subscription.dto.request;
+package com.spring.ftbackend.subscription.dto.request;
 
 import lombok.Getter;
 

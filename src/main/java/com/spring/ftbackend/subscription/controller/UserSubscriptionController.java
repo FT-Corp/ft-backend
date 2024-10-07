@@ -1,18 +1,17 @@
-package com.spring.ftbackend.Subscription.controller;
+package com.spring.ftbackend.subscription.controller;
 
-import com.spring.ftbackend.Subscription.domain.UserSubscription;
-import com.spring.ftbackend.Subscription.dto.request.UserSubscriptionInfoRequestDto;
-import com.spring.ftbackend.Subscription.dto.request.UserSubscriptionSaveRequestDto;
-import com.spring.ftbackend.Subscription.dto.response.UserSubscriptionInfoResponseDto;
-import com.spring.ftbackend.Subscription.service.SubscriptionService;
-import com.spring.ftbackend.Subscription.service.UserSubscriptionService;
+import com.spring.ftbackend.subscription.domain.UserSubscription;
+import com.spring.ftbackend.subscription.dto.request.UserSubscriptionInfoRequestDto;
+import com.spring.ftbackend.subscription.dto.request.UserSubscriptionSaveRequestDto;
+import com.spring.ftbackend.subscription.dto.response.UserSubscriptionInfoResponseDto;
+import com.spring.ftbackend.subscription.service.SubscriptionService;
+import com.spring.ftbackend.subscription.service.UserSubscriptionService;
 import com.spring.ftbackend.login.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
