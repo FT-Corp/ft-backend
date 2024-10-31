@@ -9,4 +9,5 @@ public class BookDto {
     private String bookName;
     private String author;
     private String coverImageUrl;
+    private String bookPageStatus;
 }

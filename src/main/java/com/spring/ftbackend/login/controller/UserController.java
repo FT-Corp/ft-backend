@@ -50,15 +50,4 @@ public class UserController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-
-    @Operation(summary = "유저가 갖고있는 책 리스트에 책 추가해줌")
-    @PostMapping("/addBooks")
-    public ResponseEntity<String> addBookToUser(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(mediaType = "application/json",
-            examples = @ExampleObject(value ="{ \"userId\": \"1\", \"bookName\": \"어린왕자\" }")))
-            @RequestBody Map<String,String> body) {
-
-        userService.addBookToUser(Long.valueOf(body.get("userId")), body.get("bookName"));
-        return ResponseEntity.ok("Book added to user successfully.");
-    }
 }

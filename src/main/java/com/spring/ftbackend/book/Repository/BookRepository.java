@@ -19,10 +19,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Long findBookIdByBookName(String bookName);
 
     // bookname,author,cover_image_url 만 가져오는 쿼리
-    @Query("SELECT b.bookName, b.author, b.coverImageUrl FROM Book b")
-    List<Object[]> findAllBookFields();
+    @Query("SELECT b.bookName, b.author, b.coverImageUrl FROM Book b WHERE b.bookPageStatus = 'CREATED'")
+    List<Object[]> findCreatedBookFields();
 
     // 책 이름과 저자로 책이 존재하는지 확인하는 메서드
     boolean existsByBookNameAndAuthor(String bookName, String author);
 
+    // 책 이름과 저자로 검색하는 메서드
+    Optional<Book> findByBookNameAndAuthor(String bookName, String author);
 }

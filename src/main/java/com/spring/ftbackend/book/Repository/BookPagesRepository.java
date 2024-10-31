@@ -8,5 +8,10 @@ import java.util.List;
 
 @Repository
 public interface BookPagesRepository extends JpaRepository<BookPages, Long> {
+
+    // bookId로 bookPage 목록을 찾는 쿼리 메서드
     List<BookPages> findByBook_BookId(Long bookId);
+
+    // bookId가 존재하는지 확인하는 쿼리 메서드
+    boolean existsByBook_BookId(Long bookId);
 }

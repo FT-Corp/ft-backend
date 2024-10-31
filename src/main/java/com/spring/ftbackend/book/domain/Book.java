@@ -3,14 +3,15 @@ package com.spring.ftbackend.book.domain;
 import com.spring.ftbackend.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Book extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
@@ -27,7 +28,18 @@ public class Book extends BaseEntity {
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<UserBooks> userBooks;
 
-    public Book() {
+    public enum BookPageStatus {
+        NOT_CREATED,   // 책이 생성되지 않은 상태
+        CREATED       // 책이 생성된 상태
+    }
+
+    @Enumerated(EnumType.STRING)
+    private BookPageStatus bookPageStatus;
+
+    // 엔티티가 저장되기 전에 bookPageStatus를 NOT_CREATED로 설정
+    @PrePersist
+    public void prePersist() {
+        this.bookPageStatus = BookPageStatus.NOT_CREATED;
     }
 
     public Book( String bookName,String author,String coverImageUrl) {

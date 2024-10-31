@@ -6,11 +6,13 @@ import com.spring.ftbackend.book.Repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.BookPages;
 import com.spring.ftbackend.book.dto.BookDto;
+import com.spring.ftbackend.gemini.service.GeminiService;
 import com.spring.ftbackend.login.Repository.UserRepository;
 import com.spring.ftbackend.openAI.service.OpenAiService;
 import com.spring.ftbackend.s3.service.S3UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,19 +33,28 @@ public class BookService {
     private UserRepository userRepository;
     @Autowired
     private UserBooksRepository userBooksRepository;
+    @Autowired
+    private GeminiService geminiService;
+    @Autowired
+    private SseEmitterService sseEmitterService;
 
     //표지생성후 s3에 업로드하고 url을 반환하는 메서드
-    public void bookCoverMake(String bookname, String author) throws IOException {
+    public String bookCoverMake(String bookname, String author) throws IOException {
         String imageUrl = openAiService.generateImage(bookname);
         String s3url = s3UploadService.uploadFileFromUrl(imageUrl);
         bookRepository.save(new Book(bookname, author, s3url));
+
+        return s3url;
     }
+
 
     // 책 내용을 생성하고 페이지별로 나누어 s3에 업로드하고 db에 저장하는 메서드
     public void addBookPage(String bookname,String author, Integer maxlength) throws IOException {
-        String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+//        String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+        String gptApiResponse = geminiService.gemini(bookname, author);
         List<String> bookSplitList = splitText(gptApiResponse, maxlength);
-        System.out.println("생성할 페이지 수:" + bookSplitList.size());
+        int totalPages = bookSplitList.size();
+        System.out.println("생성할 페이지 수:" + totalPages);
         // 각 페이지에 대해 이미지를 생성해 s3에 업로드하고 db에 저장
         for (int i = 0;i<bookSplitList.size();i++){
             String part = bookSplitList.get(i);
@@ -61,15 +72,25 @@ public class BookService {
             bookPage.setImage_url(s3url);
             bookPagesRepository.save(bookPage);
 
+            // 진행 상황을 퍼센트로 계산하고 SSE로 전송
+            int progress = (int) ((i + 1) / (double) totalPages * 100);
+            System.out.println("진행률: " + progress + "%");
+            sseEmitterService.sendProgress(bookname,progress);
+
             System.out.println("페이지"+(i+1)+"/"+bookSplitList.size()+"생성 완료");
 
-            // 20초(20,000밀리초) 대기
+//             20초(20,000밀리초) 대기 실제 이미지 생성시 키기 (openAI api 호출 제한때문)
             try {
-                Thread.sleep(20000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+        // 책의 상태를 CREATED로 변경
+        Book book = bookRepository.findByBookName(bookname).get();
+        book.setBookPageStatus(Book.BookPageStatus.CREATED);
+        bookRepository.save(book);
     }
 
 
@@ -107,6 +128,7 @@ public class BookService {
             bookDto.setBookName(fields.getBookName());
             bookDto.setAuthor(fields.getAuthor());
             bookDto.setCoverImageUrl(fields.getCoverImageUrl());
+            bookDto.setBookPageStatus(fields.getBookPageStatus().toString());
             return bookDto;
         }).collect(Collectors.toList());
         return collect;
@@ -120,7 +142,7 @@ public class BookService {
 
     // db에 있는 모든 책 리스트 반환
     public List<Map<String, String>> allBookList() {
-        List<Object[]> bookFields = bookRepository.findAllBookFields();
+        List<Object[]> bookFields = bookRepository.findCreatedBookFields();
         return bookFields.stream().map(fields -> {
             Map<String, String> bookMap = new HashMap<>();
             bookMap.put("bookName", (String) fields[0]);
@@ -143,5 +165,18 @@ public class BookService {
 
     public Long findBookIdByBookName(String bookName) {
         return bookRepository.findBookIdByBookName(bookName);
+    }
+    // 책 이름,저자로 책의 표지 이미지 url을 반환
+    public String findCoverImageUrlByBookName(String bookName,String author) {
+        return bookRepository.findByBookNameAndAuthor(bookName,author).get().getCoverImageUrl();
+    }
+
+    // 책 이름이 bookpages테이블에 존재하는지 확인
+    public boolean findBookPagesByBookName(String bookName) {
+
+        // 책 이름으로 bookId를 찾음
+        Long bookId = bookRepository.findBookIdByBookName(bookName);
+        // bookId가 bookpages테이블에 존재하는지 확인
+        return bookPagesRepository.existsByBook_BookId(bookId);
     }
 }

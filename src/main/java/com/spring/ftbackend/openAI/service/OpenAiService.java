@@ -41,6 +41,11 @@ public class OpenAiService {
 
     //이미지 생성해주는 메소드
     public String generateImage(String prompt) {
+        try {
+            return "https://th.bing.com/th/id/OIG1.wQ7nqzXG6LLji1s3MrOP";
+        }
+        catch (Exception e) {
+        }
         String url = "https://api.openai.com/v1/images/generations";
         RestTemplate restTemplate = new RestTemplate();
 
