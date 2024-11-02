@@ -3,6 +3,7 @@ package com.spring.ftbackend.Term.controller;
 import com.spring.ftbackend.Term.domain.Term;
 import com.spring.ftbackend.Term.dto.TermSaveDto;
 import com.spring.ftbackend.Term.service.TermService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ public class TermController {
 
     private final TermService termService;
 
+    @Operation(summary = "이용약관 등록")
     @PostMapping
     public ResponseEntity<String> saveTerm(@RequestBody TermSaveDto termSaveDto) {
         boolean isSaved = termService.saveTerm(termSaveDto);
@@ -41,6 +43,7 @@ public class TermController {
 
     }
 
+    @Operation(summary = "이용약관 조회")
     @GetMapping
     public ResponseEntity<List<Term>> getAllTerms() {
         return ResponseEntity.status(HttpStatus.ACCEPTED)

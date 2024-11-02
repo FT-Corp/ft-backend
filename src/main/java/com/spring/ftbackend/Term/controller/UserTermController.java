@@ -4,6 +4,7 @@ package com.spring.ftbackend.Term.controller;
 import com.spring.ftbackend.Term.domain.UserTerm;
 import com.spring.ftbackend.Term.dto.UserTermSaveDto;
 import com.spring.ftbackend.Term.service.UserTermService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserTermController {
     private final UserTermService userTermService;
 
+    @Operation(summary = "유저가 약관 동의할때 요청보냄")
     @PostMapping
     public ResponseEntity<String> saveUserTerm(UserTermSaveDto userTermSaveDto) {
         boolean isSaved = userTermService.saveUserTerm(userTermSaveDto);

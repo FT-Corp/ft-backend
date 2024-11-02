@@ -4,6 +4,7 @@ package com.spring.ftbackend.subscription.controller;
 import com.spring.ftbackend.subscription.domain.Subscription;
 import com.spring.ftbackend.subscription.dto.request.SubscriptionSaveRequestDto;
 import com.spring.ftbackend.subscription.service.SubscriptionService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,12 +25,14 @@ public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
 
+    @Operation(summary = "구독 플랜 조회")
     @GetMapping
     public ResponseEntity<List<Subscription>> getAllSubscriptions() {
         log.info("getAllSubscriptions");
         return ResponseEntity.ok().body(subscriptionService.getAllSubscriptions());
     }
 
+    @Operation(summary = "구독 등록")
     @PostMapping
     public ResponseEntity<Void> saveSubscription(@RequestBody SubscriptionSaveRequestDto subscriptionSaveRequestDto) {
         log.info(subscriptionSaveRequestDto.getSubscriptionType());
