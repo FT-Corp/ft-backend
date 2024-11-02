@@ -22,7 +22,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Operation(summary = "회원가입", description = "회원가입을 수행합니다.")
+    @Operation(summary = "회원가입",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"username\": \"asdf\", \"password\": \"1234\", \"nickname\": \"aa\" }")
+                    )
+            )
+    )
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserLoginRegistrationRequest request) {
         try {
@@ -33,16 +40,20 @@ public class UserController {
         }
     }
 
-    @Operation(summary = "로그인", description = "로그인을 수행합니다.")
+    @Operation(summary = "로그인",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"username\": \"asdf\", \"password\": \"1234\" }")
+                    )
+            )
+    )
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(mediaType = "application/json",
-            examples = @ExampleObject(value ="{ \"username\": \"asdf\", \"password\": \"1234\" }")))
-            @RequestBody Map<String,String> request) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> request) {
         Optional<Users> user = userService.login(request.get("username"), request.get("password"));
 
         if (user.isPresent()) {
-            Map<String,Object> response = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
             response.put("userId", user.get().getUserId());
             return ResponseEntity.ok(response);
         } else {
