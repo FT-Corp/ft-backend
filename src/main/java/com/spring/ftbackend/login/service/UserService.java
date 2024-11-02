@@ -48,5 +48,9 @@ public class UserService {
         userBooksRepository.save(new UserBooks(user,book));
     }
 
+    // 회원가입 시 username 중복 검사
+    public boolean isUsernameTaken(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
 }
 

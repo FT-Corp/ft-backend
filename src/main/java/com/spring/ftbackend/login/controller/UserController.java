@@ -6,6 +6,7 @@ import com.spring.ftbackend.login.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,40 @@ public class UserController {
             Map<String, Object> response = new HashMap<>();
             response.put("error", "Invalid username or password.");
             return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    // username 중복 검사 API
+    @Operation(summary = "username 중복 검사",requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "사용자 이름을 검사하기 위한 요청 본문",
+            required = true,
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(
+                            type = "object",
+                            example = "{ \"username\": \"asdf\" }"
+                    ),
+                    examples = @ExampleObject(
+                            name = "Username Example",
+                            value = "{ \"username\": \"asdf\" }"
+                    )
+            )
+    ))
+    @PostMapping("/validate")
+    public ResponseEntity<Map<String, Object>> checkUsername(@RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+
+        String username = request.get("username");
+        boolean isTaken = userService.isUsernameTaken(username);
+
+        if (isTaken) {
+            response.put("available", false);
+            response.put("message", "이미 사용 중인 아이디입니다.");
+            return ResponseEntity.status(409).body(response); // 409 Conflict
+        } else {
+            response.put("available", true);
+            response.put("message", "사용 가능한 아이디입니다.");
+            return ResponseEntity.ok(response); // 200 OK
         }
     }
 }

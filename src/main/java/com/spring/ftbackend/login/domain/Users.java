@@ -18,13 +18,12 @@ public class Users extends BaseEntity {
     @Column(nullable = false)
     private String nickName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true) // unique 제약 조건 추가
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserBooks> userBooks;
-
 }
