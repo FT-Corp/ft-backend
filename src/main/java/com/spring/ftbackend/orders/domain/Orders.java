@@ -2,7 +2,7 @@ package com.spring.ftbackend.orders.domain;
 
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.common.entity.BaseEntity;
-import com.spring.ftbackend.login.domain.Users;
+import com.spring.ftbackend.user.domain.Users;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

@@ -4,7 +4,7 @@ import com.spring.ftbackend.book.Repository.BookPagesRepository;
 import com.spring.ftbackend.book.domain.BookPages;
 import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.book.service.BookService;
-import com.spring.ftbackend.login.service.UserService;
+import com.spring.ftbackend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -34,12 +34,16 @@ public class BookController {
         return "Test successful.";
     }
 
-    @Operation(summary = "책 검색시 실행")
+    @Operation(summary = "책 검색시 실행",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"bookName\": \"데미안\", \"author\": \"헤르만 헤세\" }")
+                    )
+            )
+    )
     @PostMapping("/searchBook")
-    public ResponseEntity<Map<String,Object>> searchBook(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
-            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value ="{ \"bookName\": \"데미안\", \"author\": \"헤르만 헤세\" }")))
-            @RequestBody Map<String,String> request) throws IOException {
+    public ResponseEntity<Map<String, Object>> searchBook(@RequestBody Map<String, String> request) throws IOException {
 
         Map<String, Object> response = new HashMap<>();
 
@@ -60,12 +64,17 @@ public class BookController {
 
     }
 
-    @Operation(summary = "사용자가 갖고있는 책 목록 반환")
+
+    @Operation(summary = "사용자가 갖고있는 책 목록 반환",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"userId\":\"1\" }")
+                    )
+            )
+    )
     @PostMapping("/userBooks")
-    public ResponseEntity<List<BookDto>> userBooks(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(mediaType = "application/json",
-            examples = @ExampleObject(value ="{ \"userId\":\"1\"}")))
-            @RequestBody Map<String,Long> request) {
+    public ResponseEntity<List<BookDto>> userBooks(@RequestBody Map<String, Long> request) {
         Long userId = request.get("userId");
 
         List<BookDto> bookList = bookService.BookDtoList(userId);
@@ -79,13 +88,16 @@ public class BookController {
         }
     }
 
-    @Operation(summary = "유저가 갖고있는 책 갯수 반환")
+    @Operation(summary = "유저가 갖고있는 책 갯수 반환",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"userId\":\"1\" }")
+                    )
+            )
+    )
     @PostMapping("/userBooksCount")
-    public ResponseEntity<Integer> userBooksCount(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(mediaType = "application/json",
-            examples = @ExampleObject(value ="{ \"userId\":\"1\"}")))
-            @RequestBody Map<String,Long> request) {
-
+    public ResponseEntity<Integer> userBooksCount(@RequestBody Map<String, Long> request) {
         Long userId = request.get("userId");
 
         int bookCount = bookService.userBooksCount(userId);
@@ -99,13 +111,17 @@ public class BookController {
         return ResponseEntity.ok(bookList);
     }
 
-    @Operation(summary="책 내용")
-    @PostMapping("/bookContent")
-    public ResponseEntity<List<BookPages>> bookContent(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(mediaType = "application/json",
-            examples = @ExampleObject(value ="{ \"bookName\":\"어린왕자\"}")))
-            @RequestBody Map<String,String> request) {
 
+    @Operation(summary = "책 내용",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"bookName\":\"어린왕자\" }")
+                    )
+            )
+    )
+    @PostMapping("/bookContent")
+    public ResponseEntity<List<BookPages>> bookContent(@RequestBody Map<String, String> request) {
         //bookname으로 bookId 찾기
         Long bookId = bookService.findBookIdByBookName(request.get("bookName"));
 //        System.out.println(bookId);
@@ -114,13 +130,16 @@ public class BookController {
         return ResponseEntity.ok(bookPages);
     }
 
-    @Operation(summary = "morebooks에서 유저에 책 추가")
+    @Operation(summary = "morebooks에서 유저에 책 추가",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"userId\": \"1\", \"bookName\": \"어린왕자\", \"author\": \"생텍쥐페리\" }")
+                    )
+            )
+    )
     @PostMapping("/addBooks")
-    public ResponseEntity<String> addBookToUser(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(mediaType = "application/json",
-            examples = @ExampleObject(value ="{ \"userId\": \"1\", \"bookName\": \"어린왕자\",\"author\": \"생텍쥐페리\" }")))
-            @RequestBody Map<String,String> body) {
-
+    public ResponseEntity<String> addBookToUser(@RequestBody Map<String, String> body) {
         String userId = body.get("userId");
         String bookName = body.get("bookName");
         String author = body.get("author");
@@ -140,13 +159,16 @@ public class BookController {
         return ResponseEntity.ok("Book added to user successfully.");
     }
 
-    @Operation(summary = "home 페이지에서 책 다운로드버튼을 누를시 실행")
+    @Operation(summary = "home 페이지에서 책 다운로드버튼을 누를시 실행",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"userId\": \"1\", \"bookName\": \"어린왕자\", \"author\": \"생텍쥐페리\" }")
+                    )
+            )
+    )
     @PostMapping("/downloadBook")
-    public ResponseEntity<String> downloadBook(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(mediaType = "application/json",
-            examples = @ExampleObject(value ="{ \"userId\": \"1\", \"bookName\": \"어린왕자\",\"author\": \"생텍쥐페리\" }")))
-            @RequestBody Map<String,String> request) throws IOException {
-
+    public ResponseEntity<String> downloadBook(@RequestBody Map<String, String> request) throws IOException {
         String userId = request.get("userId");
         String bookName = request.get("bookName");
         String author = request.get("author");

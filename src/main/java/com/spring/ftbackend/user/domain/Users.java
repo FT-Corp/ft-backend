@@ -1,4 +1,4 @@
-package com.spring.ftbackend.login.domain;
+package com.spring.ftbackend.user.domain;
 
 import com.spring.ftbackend.book.domain.UserBooks;
 import com.spring.ftbackend.common.entity.BaseEntity;

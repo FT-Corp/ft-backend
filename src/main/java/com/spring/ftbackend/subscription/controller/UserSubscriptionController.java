@@ -6,7 +6,7 @@ import com.spring.ftbackend.subscription.dto.request.UserSubscriptionSaveRequest
 import com.spring.ftbackend.subscription.dto.response.UserSubscriptionInfoResponseDto;
 import com.spring.ftbackend.subscription.service.SubscriptionService;
 import com.spring.ftbackend.subscription.service.UserSubscriptionService;
-import com.spring.ftbackend.login.service.UserService;
+import com.spring.ftbackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

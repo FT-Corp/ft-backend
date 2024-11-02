@@ -1,6 +1,6 @@
-package com.spring.ftbackend.login.Repository;
+package com.spring.ftbackend.user.Repository;
 
-import com.spring.ftbackend.login.domain.Users;
+import com.spring.ftbackend.user.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

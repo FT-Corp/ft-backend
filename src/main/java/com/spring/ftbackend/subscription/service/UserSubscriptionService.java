@@ -7,8 +7,8 @@ import com.spring.ftbackend.subscription.dto.request.UserSubscriptionSaveRequest
 import com.spring.ftbackend.subscription.dto.response.UserSubscriptionInfoResponseDto;
 import com.spring.ftbackend.subscription.repository.SubscriptionRepository;
 import com.spring.ftbackend.subscription.repository.UserSubscriptionRepository;
-import com.spring.ftbackend.login.Repository.UserRepository;
-import com.spring.ftbackend.login.domain.Users;
+import com.spring.ftbackend.user.Repository.UserRepository;
+import com.spring.ftbackend.user.domain.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

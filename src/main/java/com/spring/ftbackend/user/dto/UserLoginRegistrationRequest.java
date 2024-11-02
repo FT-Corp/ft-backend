@@ -1,4 +1,4 @@
-package com.spring.ftbackend.login.dto;
+package com.spring.ftbackend.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;

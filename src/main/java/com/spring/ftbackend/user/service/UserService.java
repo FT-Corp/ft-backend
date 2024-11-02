@@ -1,11 +1,11 @@
-package com.spring.ftbackend.login.service;
+package com.spring.ftbackend.user.service;
 
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.Repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.UserBooks;
-import com.spring.ftbackend.login.Repository.UserRepository;
-import com.spring.ftbackend.login.domain.Users;
+import com.spring.ftbackend.user.Repository.UserRepository;
+import com.spring.ftbackend.user.domain.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

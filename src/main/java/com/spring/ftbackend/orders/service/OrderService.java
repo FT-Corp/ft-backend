@@ -2,8 +2,8 @@ package com.spring.ftbackend.orders.service;
 
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.domain.Book;
-import com.spring.ftbackend.login.Repository.UserRepository;
-import com.spring.ftbackend.login.domain.Users;
+import com.spring.ftbackend.user.Repository.UserRepository;
+import com.spring.ftbackend.user.domain.Users;
 import com.spring.ftbackend.orders.domain.Orders;
 import com.spring.ftbackend.orders.dto.OrderSaveRequestDto;
 import com.spring.ftbackend.orders.repository.OrderRepository;

@@ -1,8 +1,8 @@
-package com.spring.ftbackend.login.controller;
+package com.spring.ftbackend.user.controller;
 
-import com.spring.ftbackend.login.domain.Users;
-import com.spring.ftbackend.login.dto.UserLoginRegistrationRequest;
-import com.spring.ftbackend.login.service.UserService;
+import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.dto.UserLoginRegistrationRequest;
+import com.spring.ftbackend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;

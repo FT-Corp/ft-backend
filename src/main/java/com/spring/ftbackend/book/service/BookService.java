@@ -7,12 +7,11 @@ import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.BookPages;
 import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.gemini.service.GeminiService;
-import com.spring.ftbackend.login.Repository.UserRepository;
+import com.spring.ftbackend.user.Repository.UserRepository;
 import com.spring.ftbackend.openAI.service.OpenAiService;
 import com.spring.ftbackend.s3.service.S3UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.util.*;

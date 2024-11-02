@@ -1,4 +1,4 @@
-package com.spring.ftbackend.login.Repository;
+package com.spring.ftbackend.user.Repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

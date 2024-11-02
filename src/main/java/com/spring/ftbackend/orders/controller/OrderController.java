@@ -1,6 +1,6 @@
 package com.spring.ftbackend.orders.controller;
 
-import com.spring.ftbackend.login.Repository.UserRepository;
+import com.spring.ftbackend.user.Repository.UserRepository;
 import com.spring.ftbackend.orders.dto.OrderSaveRequestDto;
 import com.spring.ftbackend.orders.service.OrderService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.spring.ftbackend.book.domain;
 
 import com.spring.ftbackend.common.entity.BaseEntity;
-import com.spring.ftbackend.login.domain.Users;
+import com.spring.ftbackend.user.domain.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
