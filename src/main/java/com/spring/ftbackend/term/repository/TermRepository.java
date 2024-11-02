@@ -1,6 +1,6 @@
-package com.spring.ftbackend.Term.repository;
+package com.spring.ftbackend.term.repository;
 
-import com.spring.ftbackend.Term.domain.Term;
+import com.spring.ftbackend.term.domain.Term;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

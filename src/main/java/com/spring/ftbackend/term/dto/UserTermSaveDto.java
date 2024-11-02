@@ -1,4 +1,4 @@
-package com.spring.ftbackend.Term.dto;
+package com.spring.ftbackend.term.dto;
 
 import lombok.Getter;
 

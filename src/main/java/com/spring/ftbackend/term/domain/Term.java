@@ -1,6 +1,6 @@
-package com.spring.ftbackend.Term.domain;
+package com.spring.ftbackend.term.domain;
 
-import com.spring.ftbackend.Term.dto.TermSaveDto;
+import com.spring.ftbackend.term.dto.TermSaveDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

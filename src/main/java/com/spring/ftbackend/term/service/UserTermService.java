@@ -1,8 +1,8 @@
-package com.spring.ftbackend.Term.service;
+package com.spring.ftbackend.term.service;
 
-import com.spring.ftbackend.Term.domain.UserTerm;
-import com.spring.ftbackend.Term.dto.UserTermSaveDto;
-import com.spring.ftbackend.Term.repository.UserTermRepository;
+import com.spring.ftbackend.term.domain.UserTerm;
+import com.spring.ftbackend.term.dto.UserTermSaveDto;
+import com.spring.ftbackend.term.repository.UserTermRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

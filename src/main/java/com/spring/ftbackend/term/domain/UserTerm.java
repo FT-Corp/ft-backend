@@ -1,7 +1,7 @@
-package com.spring.ftbackend.Term.domain;
+package com.spring.ftbackend.term.domain;
 
 
-import com.spring.ftbackend.Term.dto.UserTermSaveDto;
+import com.spring.ftbackend.term.dto.UserTermSaveDto;
 import com.spring.ftbackend.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

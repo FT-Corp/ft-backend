@@ -1,9 +1,8 @@
-package com.spring.ftbackend.Term.controller;
+package com.spring.ftbackend.term.controller;
 
 
-import com.spring.ftbackend.Term.domain.UserTerm;
-import com.spring.ftbackend.Term.dto.UserTermSaveDto;
-import com.spring.ftbackend.Term.service.UserTermService;
+import com.spring.ftbackend.term.dto.UserTermSaveDto;
+import com.spring.ftbackend.term.service.UserTermService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
