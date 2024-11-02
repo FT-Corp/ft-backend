@@ -1,4 +1,4 @@
-package com.spring.ftbackend.config;
+package com.spring.ftbackend.payment.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
