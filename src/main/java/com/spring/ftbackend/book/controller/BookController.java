@@ -116,14 +116,15 @@ public class BookController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(
                             mediaType = "application/json",
-                            examples = @ExampleObject(value = "{ \"bookName\":\"어린왕자\" }")
+                            examples = @ExampleObject(value = "{ \"bookId\":\"1\" }")
                     )
             )
     )
     @PostMapping("/bookContent")
-    public ResponseEntity<List<BookPages>> bookContent(@RequestBody Map<String, String> request) {
+    public ResponseEntity<List<BookPages>> bookContent(@RequestBody Map<String, Long> request) {
         //bookname으로 bookId 찾기
-        Long bookId = bookService.findBookIdByBookName(request.get("bookName"));
+//        Long bookId = bookService.findBookIdByBookName(request.get("bookName"));
+        Long bookId = request.get("bookId");
 //        System.out.println(bookId);
         List<BookPages> bookPages = bookPagesRepository.findByBook_BookId(bookId);
 //        System.out.println(bookPages.toString());
