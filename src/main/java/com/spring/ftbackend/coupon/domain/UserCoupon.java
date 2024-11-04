@@ -1,6 +1,6 @@
 package com.spring.ftbackend.coupon.domain;
 
-import com.spring.ftbackend.login.domain.Users;
+import com.spring.ftbackend.user.domain.Users;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

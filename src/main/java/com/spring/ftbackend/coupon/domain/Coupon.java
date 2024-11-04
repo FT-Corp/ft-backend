@@ -1,7 +1,6 @@
 package com.spring.ftbackend.coupon.domain;
 
 import com.spring.ftbackend.common.entity.BaseEntity;
-import com.spring.ftbackend.login.domain.Users;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
