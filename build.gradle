@@ -30,6 +30,8 @@ dependencies {
     implementation platform("org.springframework.ai:spring-ai-bom:1.0.0-SNAPSHOT")
     implementation 'org.springframework.ai:spring-ai-openai'
     implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+    // json
+    implementation 'org.json:json:20240303'
 //    // AWS SDK BOM 추가 (최신 버전 사용)
 //    implementation(platform("software.amazon.awssdk:bom:2.21.1"))
 //    // Amazon S3 의존성 추가
