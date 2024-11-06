@@ -8,7 +8,8 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class UserBooks extends BaseEntity {
+@Table(name = "user_books")
+public class UserBook extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userBookId;
@@ -21,12 +22,12 @@ public class UserBooks extends BaseEntity {
     @JoinColumn(name="book_id",nullable = false)
     private Book book;
 
-    public UserBooks(User user, Book book) {
+    public UserBook(User user, Book book) {
         this.user = user;
         this.book = book;
     }
 
-    public UserBooks() {
+    public UserBook() {
 
     }
 }

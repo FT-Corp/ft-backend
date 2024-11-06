@@ -3,7 +3,7 @@ package com.spring.ftbackend.user.service;
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.Repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
-import com.spring.ftbackend.book.domain.UserBooks;
+import com.spring.ftbackend.book.domain.UserBook;
 import com.spring.ftbackend.user.Repository.UserRepository;
 import com.spring.ftbackend.user.domain.User;
 import com.spring.ftbackend.user.dto.UserRegistrationRequest;
@@ -54,7 +54,7 @@ public class UserService {
         Book book = bookRepository.findByBookName(bookName).orElse(null);
         System.out.println(user);
         System.out.println(book);
-        userBooksRepository.save(new UserBooks(user,book));
+        userBooksRepository.save(new UserBook(user,book));
     }
 
     // 회원가입 시 username 중복 검사

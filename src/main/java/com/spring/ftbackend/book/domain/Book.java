@@ -26,7 +26,7 @@ public class Book extends BaseEntity {
     private List<BookPage> pages;
 
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<UserBooks> userBooks;
+    private List<UserBook> userBooks;
 
     public enum BookPageStatus {
         NOT_CREATED,   // 책이 생성되지 않은 상태

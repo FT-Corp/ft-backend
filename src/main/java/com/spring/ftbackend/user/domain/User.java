@@ -1,6 +1,6 @@
 package com.spring.ftbackend.user.domain;
 
-import com.spring.ftbackend.book.domain.UserBooks;
+import com.spring.ftbackend.book.domain.UserBook;
 import com.spring.ftbackend.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,7 +37,7 @@ public class User extends BaseEntity {
     private String profileImageUrl;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<UserBooks> userBooks;
+    private List<UserBook> userBooks;
 
 
 }
