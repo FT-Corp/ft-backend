@@ -3,13 +3,15 @@ package com.spring.ftbackend.user.domain;
 import com.spring.ftbackend.book.domain.UserBooks;
 import com.spring.ftbackend.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "users")
 public class User extends BaseEntity {
     @Id
@@ -23,14 +25,19 @@ public class User extends BaseEntity {
     private String username;
 
     @Column(nullable = false)
-    private String nickName;
+    private String nickname;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String phoneNumber;
 
     @Column(nullable = true)
     private String profileImageUrl;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserBooks> userBooks;
+
+
 }

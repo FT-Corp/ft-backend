@@ -1,7 +1,7 @@
 package com.spring.ftbackend.user.controller;
 
 import com.spring.ftbackend.user.domain.User;
-import com.spring.ftbackend.user.dto.UserLoginRegistrationRequest;
+import com.spring.ftbackend.user.dto.UserRegistrationRequest;
 import com.spring.ftbackend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,14 +26,14 @@ public class UserController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(
                             mediaType = "application/json",
-                            examples = @ExampleObject(value = "{ \"username\": \"asdf\", \"password\": \"1234\", \"nickname\": \"aa\" }")
+                            examples = @ExampleObject(value = "{ \"name\": \"무지\", \"username\": \"asdf\", \"password\": \"1234\", \"nickname\": \"aa\", \"phoneNumber\": \"010-1234-5678\" }")
                     )
             )
     )
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserLoginRegistrationRequest request) {
+    public ResponseEntity<String> register(@RequestBody UserRegistrationRequest request) {
         try {
-            userService.register(request.getUsername(), request.getPassword(),request.getNickname());
+            userService.register(request);
             return ResponseEntity.ok("User registered successfully.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
