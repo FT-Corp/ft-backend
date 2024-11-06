@@ -23,7 +23,7 @@ public class Book extends BaseEntity {
     private String coverImageUrl; // 책 표지 이미지
 
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<BookPages> pages;
+    private List<BookPage> pages;
 
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<UserBooks> userBooks;

@@ -1,7 +1,7 @@
 package com.spring.ftbackend.book.controller;
 
 import com.spring.ftbackend.book.Repository.BookPagesRepository;
-import com.spring.ftbackend.book.domain.BookPages;
+import com.spring.ftbackend.book.domain.BookPage;
 import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.book.service.BookService;
 import com.spring.ftbackend.user.service.UserService;
@@ -121,12 +121,12 @@ public class BookController {
             )
     )
     @PostMapping("/bookContent")
-    public ResponseEntity<List<BookPages>> bookContent(@RequestBody Map<String, Long> request) {
+    public ResponseEntity<List<BookPage>> bookContent(@RequestBody Map<String, Long> request) {
         //bookname으로 bookId 찾기
 //        Long bookId = bookService.findBookIdByBookName(request.get("bookName"));
         Long bookId = request.get("bookId");
 //        System.out.println(bookId);
-        List<BookPages> bookPages = bookPagesRepository.findByBook_BookId(bookId);
+        List<BookPage> bookPages = bookPagesRepository.findByBook_BookId(bookId);
 //        System.out.println(bookPages.toString());
         return ResponseEntity.ok(bookPages);
     }

@@ -4,7 +4,7 @@ import com.spring.ftbackend.book.Repository.BookPagesRepository;
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.Repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
-import com.spring.ftbackend.book.domain.BookPages;
+import com.spring.ftbackend.book.domain.BookPage;
 import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.gemini.service.GeminiService;
 import com.spring.ftbackend.user.Repository.UserRepository;
@@ -65,7 +65,7 @@ public class BookService {
             String s3url = s3UploadService.uploadFileFromUrl(imageUrl);
 
             // BookPages 테이블에 저장
-            BookPages bookPage = new BookPages();
+            BookPage bookPage = new BookPage();
             Book book = bookRepository.findByBookName(bookname).get();
             bookPage.setBook(book);
             bookPage.setPageContent(part);

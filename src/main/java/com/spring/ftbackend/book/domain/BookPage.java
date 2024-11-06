@@ -10,7 +10,8 @@ import lombok.ToString;
 @Entity
 @Getter @Setter
 @ToString
-public class BookPages extends BaseEntity {
+@Table(name = "book_pages")
+public class BookPage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
