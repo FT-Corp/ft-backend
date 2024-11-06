@@ -6,6 +6,7 @@ import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.UserBooks;
 import com.spring.ftbackend.user.Repository.UserRepository;
 import com.spring.ftbackend.user.domain.User;
+import com.spring.ftbackend.user.dto.UserRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,19 @@ public class UserService {
 
     // 유저가 존재시 회원가입 안 시키는 기능 추가해야함
     // 회원 가입
-    public User register(String username, String password, String nickName) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setNickName(nickName);
+    public User register(UserRegistrationRequest request) {
+        if (isUsernameTaken(request.getUsername())) {
+            throw new RuntimeException("Username is already taken.");
+        }
+
+        User user = User.builder()
+                .name(request.getName())
+                .username(request.getUsername())
+                .password(request.getPassword())
+                .nickname(request.getNickname())
+                .phoneNumber(request.getPhoneNumber())
+                .build();
+
         return userRepository.save(user);
     }
 
