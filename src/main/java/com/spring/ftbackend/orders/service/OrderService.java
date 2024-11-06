@@ -3,7 +3,7 @@ package com.spring.ftbackend.orders.service;
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.user.Repository.UserRepository;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import com.spring.ftbackend.orders.domain.Orders;
 import com.spring.ftbackend.orders.dto.OrderSaveRequestDto;
 import com.spring.ftbackend.orders.repository.OrderRepository;
@@ -21,7 +21,7 @@ public class OrderService {
 
     //외부노출 가능한 OrderUid 필요
     public Long saveOrder(OrderSaveRequestDto orderSaveRequestDto) {
-        Users user = userRepository.findById(orderSaveRequestDto.getUserId())
+        User user = userRepository.findById(orderSaveRequestDto.getUserId())
                 .orElseThrow(() -> new IllegalStateException("User Not Found"));
 
         Book book = bookRepository.findById(orderSaveRequestDto.getBookId())

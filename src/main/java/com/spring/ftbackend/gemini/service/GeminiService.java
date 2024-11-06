@@ -12,7 +12,7 @@ import java.io.IOException;
 @Service
 public class GeminiService {
     public String gemini(String bookName,String author) {
-        String apiKey = "AIzaSyCzRLhglrB74THTrUai8SdlBtX7Tr2PYR4"; // 여기에 Google API 키를 넣으세요.
+        String apiKey = "AIzaSyCzRLhglrB74THTrUai8SdlBtX7Tr2PYR4";
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
 
         // JSON 요청 바디 생성

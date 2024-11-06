@@ -8,7 +8,7 @@ import com.spring.ftbackend.coupon.dto.response.CouponResponse;
 import com.spring.ftbackend.coupon.repository.CouponRepository;
 import com.spring.ftbackend.coupon.repository.UserCouponRepository;
 import com.spring.ftbackend.user.Repository.UserRepository;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class UserCouponService {
     }
 
     public void registerUserCoupon(UserCouponSaveRequest request) {
-        Users user = userRepository.findById(request.userId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
         Coupon coupon = couponRepository.findById(request.couponId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid coupon"));

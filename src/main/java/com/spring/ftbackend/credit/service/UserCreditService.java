@@ -1,8 +1,6 @@
 package com.spring.ftbackend.credit.service;
 
 
-import com.spring.ftbackend.coupon.domain.Coupon;
-import com.spring.ftbackend.coupon.domain.UserCoupon;
 import com.spring.ftbackend.credit.domain.Credit;
 import com.spring.ftbackend.credit.domain.UserCredit;
 import com.spring.ftbackend.credit.dto.request.UserCreditSaveRequest;
@@ -10,7 +8,7 @@ import com.spring.ftbackend.credit.dto.response.CreditResponse;
 import com.spring.ftbackend.credit.repository.CreditRepository;
 import com.spring.ftbackend.credit.repository.UserCreditRepository;
 import com.spring.ftbackend.user.Repository.UserRepository;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +27,7 @@ public class UserCreditService {
     }
 
     public void registerUserCredit(UserCreditSaveRequest request) {
-        Users user = userRepository.findById(request.userId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
         Credit credit = creditRepository.findById(request.creditId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid credit"));

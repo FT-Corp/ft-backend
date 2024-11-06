@@ -2,7 +2,7 @@ package com.spring.ftbackend.orders.domain;
 
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.common.entity.BaseEntity;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,7 +35,7 @@ public class Orders extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    private User user;
 
 
     private Integer totalAmount;
@@ -48,7 +48,7 @@ public class Orders extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderPaymentStatus orderPaymentStatus;
 
-    public static Orders from(Book book1, Users user1, Integer totalAmount, Integer discountAmount, boolean isFreeContent) {
+    public static Orders from(Book book1, User user1, Integer totalAmount, Integer discountAmount, boolean isFreeContent) {
         return Orders.builder()
                 .totalAmount(totalAmount)
                 .discountAmount(discountAmount)

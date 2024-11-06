@@ -1,6 +1,6 @@
 package com.spring.ftbackend.coupon.domain;
 
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,9 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,6 +29,6 @@ public class UserCoupon {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    private User user;
 
 }

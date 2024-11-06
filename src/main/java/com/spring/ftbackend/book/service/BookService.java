@@ -49,7 +49,9 @@ public class BookService {
 
     // 책 내용을 생성하고 페이지별로 나누어 s3에 업로드하고 db에 저장하는 메서드
     public void addBookPage(String bookname,String author, Integer maxlength) throws IOException {
-//        String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+        // OpenAI API를 사용해 책 내용 생성
+        //        String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+        // Gemini API를 사용해 책 내용 생성
         String gptApiResponse = geminiService.gemini(bookname, author);
         List<String> bookSplitList = splitText(gptApiResponse, maxlength);
         int totalPages = bookSplitList.size();

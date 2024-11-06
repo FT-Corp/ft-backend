@@ -5,7 +5,7 @@ import com.spring.ftbackend.book.Repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.UserBooks;
 import com.spring.ftbackend.user.Repository.UserRepository;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +22,8 @@ public class UserService {
 
     // 유저가 존재시 회원가입 안 시키는 기능 추가해야함
     // 회원 가입
-    public Users register(String username, String password, String nickName) {
-        Users user = new Users();
+    public User register(String username, String password, String nickName) {
+        User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setNickName(nickName);
@@ -31,8 +31,8 @@ public class UserService {
     }
 
     // 로그인
-    public Optional<Users> login(String username, String password) {
-        Users user = userRepository.findByUsername(username).orElse(null);
+    public Optional<User> login(String username, String password) {
+        User user = userRepository.findByUsername(username).orElse(null);
         if (user != null && user.getPassword().equals(password)){
             return Optional.of(user);
         }
@@ -41,7 +41,7 @@ public class UserService {
 
     // user_books 테이블에 책을 추가하는 메서드
     public void addBookToUser(Long id, String bookName) {
-        Users user = userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElse(null);
         Book book = bookRepository.findByBookName(bookName).orElse(null);
         System.out.println(user);
         System.out.println(book);

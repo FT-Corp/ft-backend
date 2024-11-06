@@ -4,7 +4,7 @@ import com.spring.ftbackend.book.Repository.BookPagesRepository;
 import com.spring.ftbackend.book.Repository.BookRepository;
 import com.spring.ftbackend.book.service.BookService;
 import com.spring.ftbackend.gemini.service.GeminiService;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import com.spring.ftbackend.user.service.UserService;
 import com.spring.ftbackend.openAI.service.OpenAiService;
 import com.spring.ftbackend.s3.service.S3UploadService;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TestCommandLineRunner implements CommandLineRunner {
-    private Users user;
+    private User user;
 
     @Autowired
     private BookService bookService;

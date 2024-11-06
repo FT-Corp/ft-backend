@@ -1,7 +1,7 @@
 package com.spring.ftbackend.subscription.domain;
 
 import com.spring.ftbackend.common.entity.BaseEntity;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,7 +34,7 @@ public class UserSubscription extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscription_id", nullable = false)
@@ -50,7 +50,7 @@ public class UserSubscription extends BaseEntity {
 
 
     //팩토리
-    public static UserSubscription from(Users user, Subscription subscription, LocalDateTime startDate, String paymentStatus){
+    public static UserSubscription from(User user, Subscription subscription, LocalDateTime startDate, String paymentStatus){
         return UserSubscription.builder()
                 .user(user)
                 .subscription(subscription)

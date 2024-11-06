@@ -1,7 +1,7 @@
 package com.spring.ftbackend.book.domain;
 
 import com.spring.ftbackend.common.entity.BaseEntity;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,13 +15,13 @@ public class UserBooks extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name="user_id",nullable = false)
-    private Users user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name="book_id",nullable = false)
     private Book book;
 
-    public UserBooks(Users user, Book book) {
+    public UserBooks(User user, Book book) {
         this.user = user;
         this.book = book;
     }

@@ -175,18 +175,16 @@ public class BookController {
         String author = request.get("author");
 
 
-//        //책이 db에 있는지 확인
-//        if (bookService.findBook(bookName,author)){
-//            //사용자가 책을 가지고 있는지 확인
-//            boolean bookInUser = bookService.findBookInUser(Long.valueOf(userId), bookName);
-//            if (bookInUser) {
-//                return ResponseEntity.ok("Book found in db and user has it.");
-//            } else{
-//                //사용자가 책을 가지고 있지 않으면 UserBooks 테이블에 저장
-//                userService.addBookToUser(Long.valueOf(userId), bookName);
-//                return ResponseEntity.ok("Book found in db and added to user.");
-//            }
-//        }
+        //책이 db에 있는지 확인
+        if (bookService.findBook(bookName,author)){
+            //사용자가 책을 가지고 있는지 확인
+            boolean bookInUser = bookService.findBookInUser(Long.valueOf(userId), bookName);
+            if (bookInUser) {
+                System.out.println("책 이미 존재");
+                return ResponseEntity.ok("Book found in db and user has it.");
+            }
+        }
+
         // UserBooks 테이블에 저장
         userService.addBookToUser(Long.valueOf(userId), bookName);
         // 책 내용이 없으면

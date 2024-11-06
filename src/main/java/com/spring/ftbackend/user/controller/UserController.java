@@ -1,6 +1,6 @@
 package com.spring.ftbackend.user.controller;
 
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import com.spring.ftbackend.user.dto.UserLoginRegistrationRequest;
 import com.spring.ftbackend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +50,7 @@ public class UserController {
     )
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> request) {
-        Optional<Users> user = userService.login(request.get("username"), request.get("password"));
+        Optional<User> user = userService.login(request.get("username"), request.get("password"));
 
         if (user.isPresent()) {
             Map<String, Object> response = new HashMap<>();

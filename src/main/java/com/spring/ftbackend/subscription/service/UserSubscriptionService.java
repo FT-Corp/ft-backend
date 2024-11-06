@@ -8,7 +8,7 @@ import com.spring.ftbackend.subscription.dto.response.UserSubscriptionInfoRespon
 import com.spring.ftbackend.subscription.repository.SubscriptionRepository;
 import com.spring.ftbackend.subscription.repository.UserSubscriptionRepository;
 import com.spring.ftbackend.user.Repository.UserRepository;
-import com.spring.ftbackend.user.domain.Users;
+import com.spring.ftbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class UserSubscriptionService {
 
     public boolean saveUserSubscription(UserSubscriptionSaveRequestDto userSubscriptionSaveRequestDto) {
         log.info(String.valueOf(userSubscriptionSaveRequestDto.getUserId()));
-        Users user = userRepository.findById(userSubscriptionSaveRequestDto.getUserId())
+        User user = userRepository.findById(userSubscriptionSaveRequestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         Subscription subscription = subscriptionRepository.findById(userSubscriptionSaveRequestDto.getSubscriptionId())
                 .orElseThrow(() -> new IllegalArgumentException("Subscription not found"));
@@ -52,7 +52,7 @@ public class UserSubscriptionService {
     public UserSubscriptionInfoResponseDto getUserSubscription(UserSubscriptionInfoRequestDto userSubscriptionInfoRequestDto){
         Long userId = userSubscriptionInfoRequestDto.getUserId();
 
-        Users user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         UserSubscription userSubscription = userSubscriptionRepository.findUserSubscriptionByUserId(userId)
