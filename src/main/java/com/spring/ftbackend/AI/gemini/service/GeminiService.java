@@ -1,6 +1,8 @@
-package com.spring.ftbackend.gemini.service;
+package com.spring.ftbackend.AI.gemini.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -11,76 +13,70 @@ import java.io.IOException;
 
 @Service
 public class GeminiService {
-    public String gemini(String bookName,String author) {
-        String apiKey = "AIzaSyCzRLhglrB74THTrUai8SdlBtX7Tr2PYR4";
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
 
+    @Value("${gemini.api.key}")
+    private String geminiApiKey;
+    private String url;
+
+    @PostConstruct
+    public void init() {
+        this.url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + geminiApiKey;
+    }
+
+    public String gemini(String text) {
         // JSON 요청 바디 생성
         String requestBody = String.format("""
         {
           "contents": [{
-            "parts": [{"text": "책%s(%s)를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘"}],
+            "parts": [{"text": "%s"}]
           }]
         }
-        """, bookName,author);
-
+        """, text);
         // HttpClient 생성
         HttpClient client = HttpClient.newHttpClient();
-
         // HttpRequest 생성
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
-
         // 요청 보내기
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
             // Jackson ObjectMapper 인스턴스 생성
             ObjectMapper objectMapper = new ObjectMapper();
             // JSON 응답 파싱
             JsonNode rootNode = objectMapper.readTree(response.body());
             // candidates 배열의 첫 번째 요소 가져오기
-            String text = rootNode.path("candidates")
+            String extractedText = rootNode.path("candidates")
                     .get(0)
                     .path("content")
                     .path("parts")
                     .get(0)
                     .path("text")
                     .asText();
-
-            System.out.println("Extracted text:" + text);
-            return text;
+            System.out.println("Extracted text:" + extractedText);
+            return extractedText;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;
         }
-
-
 
     }
     public String parseGeminiResponse(String jsonResponse) throws IOException {
         // ObjectMapper를 사용해 JSON 문자열을 JsonNode로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonResponse);
-
         // candidates 배열에 접근
         JsonNode candidatesArray = rootNode.path("candidates");
-
         // 첫 번째 candidate 객체에 접근
         JsonNode candidateObject = candidatesArray.get(0);
-
         // content 객체에 접근
         JsonNode contentObject = candidateObject.path("content");
-
         // parts 배열에 접근
         JsonNode partsArray = contentObject.path("parts");
-
         // 첫 번째 part 객체에서 text 값 추출
         String text = partsArray.get(0).path("text").asText();
-
         return text;
     }
 }

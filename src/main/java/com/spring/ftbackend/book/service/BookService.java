@@ -6,9 +6,9 @@ import com.spring.ftbackend.book.Repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.BookPage;
 import com.spring.ftbackend.book.dto.BookDto;
-import com.spring.ftbackend.gemini.service.GeminiService;
+import com.spring.ftbackend.AI.gemini.service.GeminiService;
 import com.spring.ftbackend.user.Repository.UserRepository;
-import com.spring.ftbackend.openAI.service.OpenAiService;
+import com.spring.ftbackend.AI.openAI.service.OpenAiService;
 import com.spring.ftbackend.s3.service.S3UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,9 +50,9 @@ public class BookService {
     // 책 내용을 생성하고 페이지별로 나누어 s3에 업로드하고 db에 저장하는 메서드
     public void addBookPage(String bookname,String author, Integer maxlength) throws IOException {
         // OpenAI API를 사용해 책 내용 생성
-        //        String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+        // String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
         // Gemini API를 사용해 책 내용 생성
-        String gptApiResponse = geminiService.gemini(bookname, author);
+        String gptApiResponse = geminiService.gemini("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
         List<String> bookSplitList = splitText(gptApiResponse, maxlength);
         int totalPages = bookSplitList.size();
         System.out.println("생성할 페이지 수:" + totalPages);

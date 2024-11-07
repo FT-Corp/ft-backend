@@ -1,33 +1,38 @@
-package com.spring.ftbackend.openAI.service;
+package com.spring.ftbackend.AI.openAI.service;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class OpenAiService {
-    private final String apiKey = "sk-mB-h5B9TFAnjirscOJumBDAUi6NM1zO7LXqZiYrjwvT3BlbkFJSJsDhSbbhyuT01npdlZCokuvTG2tfvpaqunGJ0yWoA";
 
-    private final OpenAiChatModel chatModel;
+    @Value("${spring.ai.openai.api-key}")
+    private String openAIApiKey;
+    private OpenAiChatModel chatModel;
 
-    public OpenAiService() {
+    @PostConstruct
+    public void init() {
         // OpenAI API 설정
-        var openAiApi = new OpenAiApi("sk-mB-h5B9TFAnjirscOJumBDAUi6NM1zO7LXqZiYrjwvT3BlbkFJSJsDhSbbhyuT01npdlZCokuvTG2tfvpaqunGJ0yWoA");
+        OpenAiApi openAiApi = new OpenAiApi(this.openAIApiKey);
 
-        // GPT-4o-mini용 채팅 모델 설정
-        var openAiChatOptionsGPT4 = OpenAiChatOptions.builder()
-                .withModel("gpt-4o")  // GPT-4o 모델 사용
-//                .withTemperature(0.7F)
+        // GPT-4o용 채팅 모델 설정
+        OpenAiChatOptions openAiChatOptionsGPT4 = OpenAiChatOptions.builder()
+                .withModel("gpt-4o")
+                // .withTemperature(0.7F) // 필요 시 주석 해제
                 .build();
         this.chatModel = new OpenAiChatModel(openAiApi, openAiChatOptionsGPT4);
     }
@@ -37,10 +42,9 @@ public class OpenAiService {
         return chatModel.call(message);
     }
 
-
-
     //이미지 생성해주는 메소드
     public String generateImage(String prompt) {
+        // 테스트용으로 임시로 이미지 URL 반환
         try {
             return "https://th.bing.com/th/id/OIG1.wQ7nqzXG6LLji1s3MrOP";
         }
@@ -51,7 +55,7 @@ public class OpenAiService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(apiKey);
+        headers.setBearerAuth(openAIApiKey);
 
         // Request body 설정
         Map<String, Object> body = new HashMap<>();
