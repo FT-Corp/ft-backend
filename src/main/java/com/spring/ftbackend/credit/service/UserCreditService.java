@@ -7,7 +7,7 @@ import com.spring.ftbackend.credit.dto.request.UserCreditSaveRequest;
 import com.spring.ftbackend.credit.dto.response.CreditResponse;
 import com.spring.ftbackend.credit.repository.CreditRepository;
 import com.spring.ftbackend.credit.repository.UserCreditRepository;
-import com.spring.ftbackend.user.Repository.UserRepository;
+import com.spring.ftbackend.user.repository.UserRepository;
 import com.spring.ftbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.spring.ftbackend;
 
-import com.spring.ftbackend.book.Repository.BookPagesRepository;
-import com.spring.ftbackend.book.Repository.BookRepository;
+import com.spring.ftbackend.book.repository.BookPagesRepository;
+import com.spring.ftbackend.book.repository.BookRepository;
 import com.spring.ftbackend.book.service.BookService;
 import com.spring.ftbackend.AI.gemini.service.GeminiService;
 import com.spring.ftbackend.user.domain.User;

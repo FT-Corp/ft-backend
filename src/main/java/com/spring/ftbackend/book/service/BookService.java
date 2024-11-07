@@ -1,13 +1,13 @@
 package com.spring.ftbackend.book.service;
 
-import com.spring.ftbackend.book.Repository.BookPagesRepository;
-import com.spring.ftbackend.book.Repository.BookRepository;
-import com.spring.ftbackend.book.Repository.UserBooksRepository;
+import com.spring.ftbackend.book.repository.BookPagesRepository;
+import com.spring.ftbackend.book.repository.BookRepository;
+import com.spring.ftbackend.book.repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.BookPage;
 import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.AI.gemini.service.GeminiService;
-import com.spring.ftbackend.user.Repository.UserRepository;
+import com.spring.ftbackend.user.repository.UserRepository;
 import com.spring.ftbackend.AI.openAI.service.OpenAiService;
 import com.spring.ftbackend.s3.service.S3UploadService;
 import org.springframework.beans.factory.annotation.Autowired;

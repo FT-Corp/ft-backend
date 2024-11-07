@@ -1,4 +1,4 @@
-package com.spring.ftbackend.book.Repository;
+package com.spring.ftbackend.book.repository;
 
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.UserBook;

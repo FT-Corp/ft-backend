@@ -1,10 +1,10 @@
 package com.spring.ftbackend.user.service;
 
-import com.spring.ftbackend.book.Repository.BookRepository;
-import com.spring.ftbackend.book.Repository.UserBooksRepository;
+import com.spring.ftbackend.book.repository.BookRepository;
+import com.spring.ftbackend.book.repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.UserBook;
-import com.spring.ftbackend.user.Repository.UserRepository;
+import com.spring.ftbackend.user.repository.UserRepository;
 import com.spring.ftbackend.user.domain.User;
 import com.spring.ftbackend.user.dto.UserRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;

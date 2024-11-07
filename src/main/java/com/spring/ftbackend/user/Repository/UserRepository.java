@@ -1,4 +1,4 @@
-package com.spring.ftbackend.user.Repository;
+package com.spring.ftbackend.user.repository;
 
 import com.spring.ftbackend.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

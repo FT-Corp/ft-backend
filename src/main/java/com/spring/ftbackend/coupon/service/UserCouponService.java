@@ -7,7 +7,7 @@ import com.spring.ftbackend.coupon.dto.request.UserCouponSaveRequest;
 import com.spring.ftbackend.coupon.dto.response.CouponResponse;
 import com.spring.ftbackend.coupon.repository.CouponRepository;
 import com.spring.ftbackend.coupon.repository.UserCouponRepository;
-import com.spring.ftbackend.user.Repository.UserRepository;
+import com.spring.ftbackend.user.repository.UserRepository;
 import com.spring.ftbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

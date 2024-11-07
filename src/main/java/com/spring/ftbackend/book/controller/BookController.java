@@ -1,7 +1,6 @@
 package com.spring.ftbackend.book.controller;
 
-import com.spring.ftbackend.book.Repository.BookPagesRepository;
-import com.spring.ftbackend.book.domain.Book;
+import com.spring.ftbackend.book.repository.BookPagesRepository;
 import com.spring.ftbackend.book.domain.BookPage;
 import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.book.service.BookService;
