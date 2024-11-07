@@ -1,6 +1,8 @@
 package com.spring.ftbackend.user.controller;
 
 import com.spring.ftbackend.user.domain.User;
+import com.spring.ftbackend.user.dto.LoginRequestDto;
+import com.spring.ftbackend.user.dto.LoginResponseDto;
 import com.spring.ftbackend.user.dto.UserRegistrationRequest;
 import com.spring.ftbackend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,17 +51,14 @@ public class UserController {
             )
     )
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> request) {
-        Optional<User> user = userService.login(request.get("username"), request.get("password"));
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request) {
+        Optional<User> user = userService.login(request.getUsername(), request.getPassword());
 
         if (user.isPresent()) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("userId", user.get().getUserId());
-            return ResponseEntity.ok(response);
+            LoginResponseDto loginResponseDto = new LoginResponseDto(user.get().getUserId(), user.get().getName(), user.get().getUsername(), user.get().getNickname(), user.get().getPhoneNumber());
+            return ResponseEntity.ok(loginResponseDto);
         } else {
-            Map<String, Object> response = new HashMap<>();
-            response.put("error", "Invalid username or password.");
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
