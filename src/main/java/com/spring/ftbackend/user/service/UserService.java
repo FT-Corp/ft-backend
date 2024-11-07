@@ -82,5 +82,12 @@ public class UserService {
     public boolean isUsernameTaken(String username) {
         return userRepository.findByUsername(username).isPresent();
     }
+
+    // 프로필 이미지 반환해주는 서비스
+    public String getProfileImageUrl(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user.getProfileImageUrl();
+    }
+
 }
 

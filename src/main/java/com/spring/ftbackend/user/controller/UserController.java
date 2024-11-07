@@ -96,4 +96,23 @@ public class UserController {
             return ResponseEntity.ok(response); // 200 OK
         }
     }
+
+    // 프로필 이미지 반환해주는 api
+    @Operation(summary = "프로필 이미지 반환",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"userId\": \"1\" }")
+                    )
+            )
+    )
+    @PostMapping("/profileImage")
+    public ResponseEntity<Map<String, Object>> profileImage(@RequestBody Map<String, Long> request) {
+        Map<String, Object> response = new HashMap<>();
+        Long userId = request.get("userId");
+        String profileImageUrl = userService.getProfileImageUrl(userId);
+        response.put("profileImageUrl", profileImageUrl);
+        return ResponseEntity.ok(response);
+    }
+
 }
