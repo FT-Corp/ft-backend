@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UserService {
@@ -28,12 +29,32 @@ public class UserService {
             throw new RuntimeException("Username is already taken.");
         }
 
+        // 프로필 이미지 URL 목록
+        String[] profileImages = {
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/panda.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/lion.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/giraffe.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/crocodile.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/cow.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/copybara.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/cat.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/bunny.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/bird.png",
+                "https://test6550.s3.ap-northeast-2.amazonaws.com/bear.png"
+        };
+
+        // 랜덤 URL 선택
+        Random random = new Random();
+        String randomProfileImageUrl = profileImages[random.nextInt(profileImages.length)];
+
+        // User 객체 생성
         User user = User.builder()
                 .name(request.getName())
                 .username(request.getUsername())
                 .password(request.getPassword())
                 .nickname(request.getNickname())
                 .phoneNumber(request.getPhoneNumber())
+                .profileImageUrl(randomProfileImageUrl)  // 랜덤 프로필 이미지 설정
                 .build();
 
         return userRepository.save(user);
