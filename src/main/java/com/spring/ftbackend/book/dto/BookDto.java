@@ -1,9 +1,10 @@
 package com.spring.ftbackend.book.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter @Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookDto {
     private Long bookId;
     private String bookName;

@@ -141,6 +141,20 @@ public class BookService {
         return Book.size();
     }
 
+    // 유저가 가지고있지 않은 책 리스트 반환
+    public List<BookDto> notUserBookList(Long userId) {
+        List<Object[]> results = bookRepository.findNotUserBookFields(userId);
+        return results.stream()
+                .map(record -> new BookDto(
+                        (Long) record[0],
+                        (String) record[1],
+                        (String) record[2],
+                        (String) record[3],
+                        (String) record[4]
+                ))
+                .collect(Collectors.toList());
+    }
+
     // db에 있는 모든 책 리스트 반환
     public List<Map<String, String>> allBookList() {
         List<Object[]> bookFields = bookRepository.findCreatedBookFields();

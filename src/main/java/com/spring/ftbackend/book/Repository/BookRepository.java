@@ -1,8 +1,10 @@
 package com.spring.ftbackend.book.Repository;
 
 import com.spring.ftbackend.book.domain.Book;
+import com.spring.ftbackend.book.dto.BookDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +29,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     // 책 이름과 저자로 검색하는 메서드
     Optional<Book> findByBookNameAndAuthor(String bookName, String author);
+
+    // 사용자가 가지고 있지 않은 책 리스트를 가져오는 쿼리
+    @Query(value = "SELECT b.book_id, b.book_name, b.author, b.cover_image_url, b.book_page_status " +
+            "FROM book b WHERE b.book_id NOT IN (SELECT ub.book_id FROM user_books ub WHERE ub.user_id = :userId) " +
+            "AND b.book_page_status = 'CREATED'", nativeQuery = true)
+    List<Object[]> findNotUserBookFields(Long userId);
 }

@@ -1,6 +1,7 @@
 package com.spring.ftbackend.book.controller;
 
 import com.spring.ftbackend.book.Repository.BookPagesRepository;
+import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.BookPage;
 import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.book.service.BookService;
@@ -104,10 +105,17 @@ public class BookController {
         return ResponseEntity.ok(bookCount);
     }
 
-    @Operation(summary = "db에 저장된 책 목록 반환")
-    @GetMapping("/books")
-    public ResponseEntity<List<Map<String, String>>> books() {
-        List<Map<String, String>> bookList = bookService.allBookList();
+    @Operation(summary = "db에 저장된 책 목록 반환",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = @ExampleObject(value = "{ \"userId\":\"1\" }")
+            )
+    ))
+    @PostMapping("/books")
+    public ResponseEntity<List<BookDto>> books(@RequestBody Map<String, Long> request) {
+        Long userId = request.get("userId");
+        List<BookDto> bookList = bookService.notUserBookList(userId);
         return ResponseEntity.ok(bookList);
     }
 
