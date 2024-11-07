@@ -45,10 +45,11 @@ public class Book extends BaseEntity {
         this.bookPageStatus = BookPageStatus.NOT_CREATED;
     }
 
-    public Book( String bookName,String author,String coverImageUrl) {
+    public Book( String bookName,String author,String coverImageUrl,String bookDescription) {
         this.bookName = bookName;
         this.author = author;
         this.coverImageUrl = coverImageUrl;
+        this.bookDescription = bookDescription;
     }
 
 }

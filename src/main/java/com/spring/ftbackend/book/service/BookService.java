@@ -41,7 +41,8 @@ public class BookService {
     public String bookCoverMake(String bookname, String author) throws IOException {
         String imageUrl = openAiService.generateImage(bookname);
         String s3url = s3UploadService.uploadFileFromUrl(imageUrl);
-        bookRepository.save(new Book(bookname, author, s3url));
+        String bookDescription = openAiService.generateChatMessage("책" + bookname + "(" + author + ")를 한줄설명해줘");
+        bookRepository.save(new Book(bookname, author, s3url,bookDescription));
 
         return s3url;
     }
@@ -91,14 +92,8 @@ public class BookService {
             }
         }
 
-        // OpenAI API를 사용해 책 한줄 요약 생성
-//        String bookSummary = openAiService.generateChatMessage("책" + bookname + "(" + author + ")를 한줄설명해줘");
-        // Gemini API를 사용해 책 한줄 요약 생성
-        String bookSummary = geminiService.gemini("책" + bookname + "(" + author + ")를 한줄설명해줘");
-
         // 책의 상태를 CREATED로 변경, 책 요약 저장
         Book book = bookRepository.findByBookName(bookname).get();
-        book.setBookDescription(bookSummary);
         book.setBookPageStatus(Book.BookPageStatus.CREATED);
         bookRepository.save(book);
     }
