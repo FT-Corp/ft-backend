@@ -54,12 +54,14 @@ public class BookController {
         //책이 db에 있는지확인후 db에있으면 이미지반환
         if(bookService.findBook(bookName,author)){
             response.put("imageUrl", bookService.findCoverImageUrlByBookName(bookName, author));
+            response.put("bookId", bookService.findBookIdByBookName(bookName));
             return ResponseEntity.ok(response);
         }
 
         //db에 없으면 이미지 생성후 반환 + db에 저장
         String imageUrl = bookService.bookCoverMake(bookName,author);
         response.put("imageUrl", imageUrl);
+        response.put("bookId", bookService.findBookIdByBookName(bookName));
         return ResponseEntity.ok(response);
 
     }
