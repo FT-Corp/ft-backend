@@ -202,4 +202,24 @@ public class BookController {
         return ResponseEntity.ok("");
     }
 
+    // bookId로 책 설명 반환
+    @Operation(summary = "bookId로 책 설명 반환",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"bookId\": \"1\" }")
+                    )
+            )
+    )
+    @PostMapping("/bookDescription")
+    public ResponseEntity<Map<String,String>> bookDescription(@RequestBody Map<String, Long> request) {
+        Long bookId = request.get("bookId");
+        String bookDescription = bookService.findBookDescriptionByBookId(bookId);
+
+        Map<String,String> response = new HashMap<>();
+        response.put("bookDescription",bookDescription);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

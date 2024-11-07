@@ -53,7 +53,10 @@ public class BookService {
         // String gptApiResponse = openAiService.generateChatMessage("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
         // Gemini API를 사용해 책 내용 생성
         String gptApiResponse = geminiService.gemini("책" + bookname +"(" + author+ ")를 어린이도 읽을 수 있게 동화로 만들어줘 이야기를 바로 시작해줘 500자 이내로 동화책으로 만들어줘");
+
+        // 책 내용을 페이지별로 나누기
         List<String> bookSplitList = splitText(gptApiResponse, maxlength);
+        // 총 페이지 수
         int totalPages = bookSplitList.size();
         System.out.println("생성할 페이지 수:" + totalPages);
         // 각 페이지에 대해 이미지를 생성해 s3에 업로드하고 db에 저장
@@ -80,7 +83,7 @@ public class BookService {
 
             System.out.println("페이지"+(i+1)+"/"+bookSplitList.size()+"생성 완료");
 
-//             20초(20,000밀리초) 대기 실제 이미지 생성시 키기 (openAI api 호출 제한때문)
+            // 20초(20,000밀리초) 대기 실제 이미지 생성시 키기 (openAI api 호출 제한때문)
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
@@ -88,8 +91,14 @@ public class BookService {
             }
         }
 
-        // 책의 상태를 CREATED로 변경
+        // OpenAI API를 사용해 책 한줄 요약 생성
+//        String bookSummary = openAiService.generateChatMessage("책" + bookname + "(" + author + ")를 한줄설명해줘");
+        // Gemini API를 사용해 책 한줄 요약 생성
+        String bookSummary = geminiService.gemini("책" + bookname + "(" + author + ")를 한줄설명해줘");
+
+        // 책의 상태를 CREATED로 변경, 책 요약 저장
         Book book = bookRepository.findByBookName(bookname).get();
+        book.setBookDescription(bookSummary);
         book.setBookPageStatus(Book.BookPageStatus.CREATED);
         bookRepository.save(book);
     }
@@ -194,4 +203,10 @@ public class BookService {
         // bookId가 bookpages테이블에 존재하는지 확인
         return bookPagesRepository.existsByBook_BookId(bookId);
     }
+
+    // bookId로 책 설명 반환
+    public String findBookDescriptionByBookId(Long bookId) {
+        return bookRepository.findById(bookId).get().getBookDescription();
+    }
+
 }

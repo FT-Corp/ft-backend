@@ -17,10 +17,13 @@ public class Book extends BaseEntity {
     private Long bookId;
 
     private String bookName; // 책 이름
+
     private String author;
 
     @Column(length = 1000)
     private String coverImageUrl; // 책 표지 이미지
+
+    private String bookDescription; // 책 설명
 
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<BookPage> pages;
