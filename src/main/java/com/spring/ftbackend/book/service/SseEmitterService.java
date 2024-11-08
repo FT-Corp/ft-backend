@@ -34,7 +34,7 @@ public class SseEmitterService {
                 try {
                     emitter.send(SseEmitter.event()
                             .name("progress")
-                            .data("Book:"+bookName+"  Progress:"+progress+"%"));
+                            .data(progress));
                     // progress가 100이면 전송 완료 후 연결 종료
                     if (progress == 100) {
                         emitter.complete(); // 연결 종료
