@@ -4,6 +4,7 @@ import com.spring.ftbackend.book.repository.BookRepository;
 import com.spring.ftbackend.book.repository.UserBooksRepository;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.UserBook;
+import com.spring.ftbackend.user.dto.UserInfoResponseDto;
 import com.spring.ftbackend.user.repository.UserRepository;
 import com.spring.ftbackend.user.domain.User;
 import com.spring.ftbackend.user.dto.UserRegistrationRequest;
@@ -87,6 +88,17 @@ public class UserService {
     public String getProfileImageUrl(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         return user.getProfileImageUrl();
+    }
+
+    public UserInfoResponseDto getUserInfo(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("User not found"));
+        return UserInfoResponseDto.builder()
+                .username(user.getUsername())
+                .phoneNumber(user.getPhoneNumber())
+                .nickname(user.getNickname())
+                .name(user.getName())
+                .build();
     }
 
 }
