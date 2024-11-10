@@ -3,6 +3,7 @@ package com.spring.ftbackend.user.controller;
 import com.spring.ftbackend.user.domain.User;
 import com.spring.ftbackend.user.dto.LoginRequestDto;
 import com.spring.ftbackend.user.dto.LoginResponseDto;
+import com.spring.ftbackend.user.dto.UserInfoResponseDto;
 import com.spring.ftbackend.user.dto.UserRegistrationRequest;
 import com.spring.ftbackend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -112,6 +113,11 @@ public class UserController {
         String profileImageUrl = userService.getProfileImageUrl(userId);
         response.put("profileImageUrl", profileImageUrl);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/userInfo")
+    public ResponseEntity<UserInfoResponseDto> getUser(@RequestParam Long userId) {
+        return ResponseEntity.ok(userService.getUserInfo(userId));
     }
 
 }
