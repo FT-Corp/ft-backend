@@ -18,6 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,18 +43,9 @@ public class Coupon extends BaseEntity {
 
     private Integer discountRate;
 
-    @Builder
-    public Coupon(String context, Integer bookLimit){
-        this.context = context;
-        this.bookLimit = bookLimit;
-    }
-    @Builder
-    public Coupon(String context, LocalDateTime issueDate, LocalDateTime expireDate, Integer discountRate){
-        this.context = context;
-        this.issueDate = issueDate;
-        this.expireDate = expireDate;
-        this.discountRate = discountRate;
-    }
+    private Integer discountAmount;
+
+
     public void setExpireDate(Integer duration){
         if(this.issueDate != null){
             this.expireDate = LocalDateTime.now().plusDays(duration);

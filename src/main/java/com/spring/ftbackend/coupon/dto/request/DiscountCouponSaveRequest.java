@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public record DiscountCouponSaveRequest(
         String context,
-        @NonNull LocalDateTime issueDate,
-        @NonNull LocalDateTime expireDate,
-        @NonNull Integer discountRate
+        Integer discountRate,
+        Integer discountAmount,
+        Integer duration
 ){}

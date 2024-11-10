@@ -26,8 +26,8 @@ public class CouponController {
     private final UserCouponService userCouponService;
 
     @PostMapping("/book")
-    public ResponseEntity<CouponResponse> saveBookCoupon(@RequestBody BookCouponSaveRequest request) {
-        CouponResponse couponResponse = couponService.saveBookCoupon(request);
+    public ResponseEntity<CouponResponse> saveBookCoupon(@RequestBody DiscountCouponSaveRequest request) {
+        CouponResponse couponResponse = couponService.saveDiscountCoupon(request);
         return ResponseEntity.ok(couponResponse);
     }
 
