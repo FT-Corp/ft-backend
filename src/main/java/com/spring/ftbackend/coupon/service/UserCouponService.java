@@ -53,6 +53,7 @@ public class UserCouponService {
                 .expireDate(coupon.getExpireDate())
                 .redeemDate(coupon.getRedeemDate())
                 .discountRate(coupon.getDiscountRate())
+                .discountAmount(coupon.getDiscountAmount())
                 .build();
     }
 

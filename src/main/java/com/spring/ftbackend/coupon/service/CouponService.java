@@ -28,8 +28,23 @@ public class CouponService {
         return mapToCouponResponse(coupon);
     }
 
-    public void saveDiscountCoupon(DiscountCouponSaveRequest request) {
+    public CouponResponse saveDiscountCoupon(DiscountCouponSaveRequest request) {
         //Coupon 부모class 생성 후 type 나누기
+        Coupon coupon = Coupon.builder()
+                .context(request.context())
+                .discountRate(request.discountRate())
+                .discountAmount(request.discountAmount())
+                .build();
+
+        couponRepository.save(coupon);
+        coupon.setExpireDate(request.duration());
+        couponRepository.save(coupon);
+
+        return mapToCouponResponse(coupon);
+    }
+
+    public void useCoupon(Integer couponId){
+
     }
 
     private CouponResponse mapToCouponResponse(Coupon coupon) {
@@ -40,6 +55,7 @@ public class CouponService {
                 .expireDate(coupon.getExpireDate())
                 .redeemDate(coupon.getRedeemDate())
                 .discountRate(coupon.getDiscountRate())
+                .discountAmount(coupon.getDiscountAmount())
                 .build();
     }
 

@@ -11,5 +11,6 @@ public record CouponResponse(
         LocalDateTime issueDate,
         LocalDateTime expireDate,
         LocalDateTime redeemDate,
-        Integer discountRate
+        Integer discountRate,
+        Integer discountAmount
 ){}
