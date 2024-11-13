@@ -1,13 +1,13 @@
 package com.spring.ftbackend.book.controller;
 
+import com.spring.ftbackend.book.domain.Book;
+import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.book.service.BookCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class BookCartController {
                     @io.swagger.v3.oas.annotations.Parameter(name = "bookId", description = "책 ID", example = "1")
             }
     )
-    @PostMapping("/deleteBookCart")
+    @DeleteMapping("/deleteBookCart")
     public ResponseEntity<String> deleteBookCart(@RequestParam Long userId, @RequestParam Long bookId) {
         bookCartService.deleteBookCart(userId, bookId);
         return ResponseEntity.status(HttpStatus.OK).body("Book deleted from cart successfully");
@@ -46,9 +46,21 @@ public class BookCartController {
                     @io.swagger.v3.oas.annotations.Parameter(name = "userId", description = "사용자 ID", example = "1")
             }
     )
-    @PostMapping("/getBookCart")
-    public ResponseEntity<List<Long>> getBookCart(@RequestParam Long userId) {
-        List<Long> bookIds = bookCartService.getBookCart(userId);
-        return ResponseEntity.ok(bookIds);
+    @GetMapping("/getBookCart")
+    public ResponseEntity<List<BookDto>> getBookCart(@RequestParam Long userId) {
+        List<BookDto> book = bookCartService.getBookCart(userId);
+        return ResponseEntity.ok(book);
     }
+
+    @Operation(summary = "장바구니에 있는 책 수 조회",
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "userId", description = "사용자 ID", example = "1")
+            }
+    )
+    @GetMapping("/countBookCart")
+    public ResponseEntity<Long> countBookCart(@RequestParam Long userId) {
+        Long count = bookCartService.countBooksInCart(userId);
+        return ResponseEntity.ok(count);
+    }
+
 }

@@ -33,4 +33,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "FROM book b WHERE b.book_id NOT IN (SELECT ub.book_id FROM user_books ub WHERE ub.user_id = :userId) " +
             "AND b.book_page_status = 'CREATED'", nativeQuery = true)
     List<Object[]> findNotUserBookFields(Long userId);
+
 }

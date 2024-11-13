@@ -1,6 +1,8 @@
 package com.spring.ftbackend.book.service;
 
+import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.BookCart;
+import com.spring.ftbackend.book.dto.BookDto;
 import com.spring.ftbackend.book.repository.BookCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,11 @@ public class BookCartService {
     }
 
     // 유저 ID를 받아 장바구니에 있는 책 리스트를 가져오는 메서드
-    public List<Long> getBookCart(Long userId) {
+    public List<BookDto> getBookCart(Long userId) {
         return bookCartRepository.getBookCart(userId);
+    }
+
+    public Long countBooksInCart(Long userId) {
+        return bookCartRepository.countByUser_UserId(userId);
     }
 }

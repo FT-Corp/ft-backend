@@ -1,6 +1,8 @@
 package com.spring.ftbackend.book.repository;
 
+import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.domain.BookCart;
+import com.spring.ftbackend.book.dto.BookDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +25,9 @@ public interface BookCartRepository extends JpaRepository<BookCart, Long> {
     @Query(value = "DELETE FROM book_cart WHERE user_id = :userId AND book_id = :bookId", nativeQuery = true)
     void deleteBookFromCart(@Param("userId") Long userId, @Param("bookId") Long bookId);
 
-    @Query("SELECT bc.book.bookId FROM BookCart bc WHERE bc.user.userId = :userId")
-    List<Long> getBookCart(@Param("userId") Long userId);
+    @Query("SELECT new com.spring.ftbackend.book.dto.BookDto(b.bookId, b.bookName, b.author, b.coverImageUrl, b.bookDescription) " +
+            "FROM BookCart bc JOIN bc.book b WHERE bc.user.userId = :userId")
+    List<BookDto> getBookCart(@Param("userId") Long userId);
+
+    Long countByUser_UserId(Long userId);
 }
