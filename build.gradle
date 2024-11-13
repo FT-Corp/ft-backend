@@ -6,6 +6,7 @@ plugins {
 
 ext {
     springAiVersion = "1.0.0-M2"
+    springCloudVersion = "2023.0.3"
 }
 
 group = 'com.spring'
@@ -39,6 +40,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation 'software.amazon.awssdk:ssm:2.17.89'
 
+
     // webClient
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
@@ -53,6 +55,8 @@ dependencies {
     // 제미나이
     implementation 'com.google.cloud:google-cloud-vertexai:0.4.0'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    // openfeign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
 
     compileOnly 'org.projectlombok:lombok'
@@ -67,6 +71,11 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
+}
 
 
 tasks.named('test') {
