@@ -2,6 +2,7 @@ package com.spring.ftbackend.payment.domain;
 
 import com.spring.ftbackend.common.entity.BaseEntity;
 import com.spring.ftbackend.orders.domain.Orders;
+import com.spring.ftbackend.orders.domain.SubscriptionOrders;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,10 +11,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.Arrays;
 
@@ -22,7 +25,7 @@ import java.util.Arrays;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Payment extends BaseEntity {
+public class SubscriptionPayment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,25 +34,20 @@ public class Payment extends BaseEntity {
 
     private Integer paymentAmount;
 
-
-
+    @Enumerated(EnumType.STRING)
+    private Payment.PaymentType paymentType;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Orders orders;
+    @JoinColumn(name = "subscription_order_id", nullable = false)
+    private SubscriptionOrders subscriptionOrders;
 
-
-    @Enumerated(EnumType.STRING)
-    private PaymentType paymentType;
-
-    public static Payment from(String transactionId, Integer paymentAmount, Orders orders) {
-        return Payment.builder()
+    public static SubscriptionPayment from(String transactionId, Integer paymentAmount, SubscriptionOrders orders) {
+        return SubscriptionPayment.builder()
                 .transactionId(transactionId)
                 .paymentAmount(paymentAmount)
-                .orders(orders)
+                .subscriptionOrders(orders)
                 .build();
     }
-
 
     public enum PaymentType {
         PENDING("미결제"),
@@ -73,6 +71,7 @@ public class Payment extends BaseEntity {
 
         }
     }
+
 
 
 }

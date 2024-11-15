@@ -7,4 +7,5 @@ public class UserSubscriptionSaveRequestDto {
     private long userId;
     private long subscriptionId;
     private String paymentStatus;
+    private Integer duration;
 }

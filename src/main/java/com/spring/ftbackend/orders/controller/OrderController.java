@@ -1,8 +1,11 @@
 package com.spring.ftbackend.orders.controller;
 
+import com.spring.ftbackend.orders.dto.SubscriptionOrderDto;
+import com.spring.ftbackend.orders.dto.SubscriptionOrderSaveRequestDto;
 import com.spring.ftbackend.user.repository.UserRepository;
 import com.spring.ftbackend.orders.dto.OrderSaveRequestDto;
 import com.spring.ftbackend.orders.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +30,19 @@ public class OrderController {
 //    }
 
     //response entity 도입, Long -> orderUid
+    @Operation(summary = "책 주문 정보 생성")
     @PostMapping
     public ResponseEntity<Long> createOrder(@RequestBody OrderSaveRequestDto orderSaveRequestDto) {
         return ResponseEntity.ok()
                 .body(orderService.saveOrder(orderSaveRequestDto));
 
+    }
+
+    @Operation(summary = "구독 주문 정보 생성")
+    @PostMapping("/subscription")
+    public ResponseEntity<Long> createSubscriptionOrder(@RequestBody SubscriptionOrderSaveRequestDto request) {
+        return ResponseEntity.ok()
+                .body(orderService.saveSubscriptionOrder(request));
     }
 
     //id get 조회방식 변경 필요

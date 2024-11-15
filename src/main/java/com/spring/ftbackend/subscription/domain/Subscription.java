@@ -3,6 +3,7 @@ package com.spring.ftbackend.subscription.domain;
 import com.spring.ftbackend.subscription.dto.request.SubscriptionSaveRequestDto;
 import com.spring.ftbackend.common.entity.BaseEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 @Entity
@@ -28,27 +30,36 @@ public class Subscription extends BaseEntity {
     private Long id;
 
     @Column
-    private Integer price;
+    private Integer monthCost;
 
     @Column
-    private Integer duration;
+    private Integer yearCost;
+
+    @Column
+    @ElementCollection
+    private List<String> recommend;
+
+//    @Column
+//    private Integer freeContentLimit;
 
     @Enumerated(EnumType.STRING)
     private SubscriptionType subscriptionType;
 
     public static Subscription from(SubscriptionSaveRequestDto subscriptionSaveRequestDto) {
         return Subscription.builder()
-                .price(subscriptionSaveRequestDto.getPrice())
-                .duration(subscriptionSaveRequestDto.getDuration())
+                .monthCost(subscriptionSaveRequestDto.getMonthCost())
+                .yearCost(subscriptionSaveRequestDto.getYearCost())
+                .recommend(subscriptionSaveRequestDto.getRecommend())
                 .subscriptionType(SubscriptionType.from(subscriptionSaveRequestDto.getSubscriptionType()))
                 .build();
     }
 
 
     public enum SubscriptionType {
-        STANDARD("기본"),
-        PREMIUM("고급"),
-        FAMILY("가족"),
+        FREE_PLAN("무료"),
+        STANDARD_PLAN("기본"),
+        PREMIUM_PLAN("고급"),
+        FAMILY_PLAN("가족"),
         ;
         private final String type;
 

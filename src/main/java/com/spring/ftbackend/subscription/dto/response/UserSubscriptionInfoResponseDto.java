@@ -12,14 +12,16 @@ public class UserSubscriptionInfoResponseDto {
     private Long id;
     private Long userId;
     private String subscriptionId;
+    private String subscriptionType;
     private LocalDateTime endDate;
     private String paymentStatus;
 
-    public static UserSubscriptionInfoResponseDto from(UserSubscription userSubscription) {
+    public static UserSubscriptionInfoResponseDto from(UserSubscription userSubscription, String subscriptionType) {
         return new UserSubscriptionInfoResponseDto(
                 userSubscription.getId(),
                 userSubscription.getUser().getUserId(),
                 userSubscription.getSubscription().getId().toString(),
+                subscriptionType,
                 userSubscription.getEndDate(),
                 userSubscription.getPaymentStatus().getStatus()
         );

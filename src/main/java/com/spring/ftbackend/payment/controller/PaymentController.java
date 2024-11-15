@@ -2,7 +2,12 @@ package com.spring.ftbackend.payment.controller;
 
 import com.spring.ftbackend.payment.domain.Payment;
 import com.spring.ftbackend.payment.dto.PaymentSaveRequestDto;
+import com.spring.ftbackend.payment.dto.SubscriptionPaymentSaveRequest;
 import com.spring.ftbackend.payment.service.PaymentService;
+import com.spring.ftbackend.payment.service.SubscriptionPaymentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +28,10 @@ import java.io.UnsupportedEncodingException;
 @Getter
 public class PaymentController {
     private final PaymentService paymentService;
+    private final SubscriptionPaymentService subscriptionPaymentService;
 
-    @PostMapping("complete")
+    @Operation(summary = "결제 모듈 완료후 서버와 검증(책)")
+    @PostMapping("/complete")
     public ResponseEntity<String> savePayment(@RequestBody PaymentSaveRequestDto paymentSaveRequestDto) {
         try {
             log.info(paymentSaveRequestDto.getPaymentType());
@@ -36,8 +43,21 @@ public class PaymentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid encoding for transaction ID");
 
         }
+    }
 
+    @Operation(summary = "결제 모듈 완료후 서버와 검증(구독)")
+    @PostMapping("/complete/subscription")
+    public ResponseEntity<String> savePaymentSubscription(@RequestBody SubscriptionPaymentSaveRequest request) {
+        try {
+            log.info(request.getPaymentType());
+            log.info(request.getTransactionId());
+            log.info(String.valueOf(request.getOrderId()));
+            String paymentDetails = subscriptionPaymentService.processPayment(request).block();
+            return ResponseEntity.ok(paymentDetails);
+        } catch (UnsupportedEncodingException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid encoding for transaction ID");
 
+        }
     }
 
 }

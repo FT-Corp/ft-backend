@@ -50,11 +50,11 @@ public class UserSubscription extends BaseEntity {
 
 
     //팩토리
-    public static UserSubscription from(User user, Subscription subscription, LocalDateTime startDate, String paymentStatus){
+    public static UserSubscription from(User user, Subscription subscription, LocalDateTime startDate, String paymentStatus, Integer duration){
         return UserSubscription.builder()
                 .user(user)
                 .subscription(subscription)
-                .endDate(calculateEndDate(startDate, subscription.getDuration()))
+                .endDate(calculateEndDate(startDate, duration))
                 .paymentStatus(PaymentStatus.from(paymentStatus))
                 // .paymentStatus(PaymentStatus.PENDING) 필드 초기화로 해결
                 .build();
@@ -83,9 +83,5 @@ public class UserSubscription extends BaseEntity {
     private static LocalDateTime calculateEndDate(LocalDateTime startDate, Integer duration) {
         return startDate.plusDays(duration);
     }
-
-
-
-
 
 }

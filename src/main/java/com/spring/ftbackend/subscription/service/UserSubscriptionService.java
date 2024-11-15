@@ -42,7 +42,7 @@ public class UserSubscriptionService {
         else{
             LocalDateTime startDate = LocalDateTime.now();
 
-            UserSubscription userSubscription = UserSubscription.from(user, subscription, startDate, userSubscriptionSaveRequestDto.getPaymentStatus());
+            UserSubscription userSubscription = UserSubscription.from(user, subscription, startDate, userSubscriptionSaveRequestDto.getPaymentStatus(), userSubscriptionSaveRequestDto.getDuration());
             userSubscriptionRepository.save(userSubscription);
 
             return true;
@@ -58,8 +58,10 @@ public class UserSubscriptionService {
         UserSubscription userSubscription = userSubscriptionRepository.findUserSubscriptionByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User subscription not found"));
 
+        String subscriptionType = userSubscription.getSubscription().getSubscriptionType().toString();
+
         log.info(String.valueOf(userSubscription.getPaymentStatus()));
 
-        return UserSubscriptionInfoResponseDto.from(userSubscription);
+        return UserSubscriptionInfoResponseDto.from(userSubscription, subscriptionType);
     }
 }
