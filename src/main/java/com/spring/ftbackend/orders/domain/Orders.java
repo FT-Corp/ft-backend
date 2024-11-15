@@ -44,6 +44,10 @@ public class Orders extends BaseEntity {
 
     private boolean isFreeContent;
 
+    private Long couponId;
+
+    private Integer credits;
+
     //payment enum 따로 빼서 공통처리 (Subscription payment 함께)
     @Enumerated(EnumType.STRING)
     private OrderPaymentStatus orderPaymentStatus;
