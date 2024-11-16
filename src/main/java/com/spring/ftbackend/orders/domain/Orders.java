@@ -3,6 +3,8 @@ package com.spring.ftbackend.orders.domain;
 import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.common.entity.BaseEntity;
 import com.spring.ftbackend.user.domain.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Builder
@@ -29,9 +32,9 @@ public class Orders extends BaseEntity {
     private Long id;
 //    private String orderId; 주문정보 조회용 id
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+    @Column
+    @ElementCollection
+    private List<Long> bookIds;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -52,12 +55,12 @@ public class Orders extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderPaymentStatus orderPaymentStatus;
 
-    public static Orders from(Book book1, User user1, Integer totalAmount, Integer discountAmount, boolean isFreeContent) {
+    public static Orders from(List<Long> bookIds, User user1, Integer totalAmount, Integer discountAmount, boolean isFreeContent) {
         return Orders.builder()
                 .totalAmount(totalAmount)
                 .discountAmount(discountAmount)
                 .isFreeContent(isFreeContent)
-                .book(book1)
+                .bookIds(bookIds)
                 .user(user1)
                 .orderPaymentStatus(OrderPaymentStatus.PENDING)
                 .build();

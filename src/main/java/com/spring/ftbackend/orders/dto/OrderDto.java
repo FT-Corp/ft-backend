@@ -4,13 +4,15 @@ import com.spring.ftbackend.orders.domain.Orders;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 public class OrderDto {
     private Integer totalAmount;
     private Integer discountAmount;
     private boolean isFreeContent;
-    private Long bookId;
+    private List<Long> bookId;
     private Long userId;
 
     public static OrderDto from(Orders orders) {
@@ -18,7 +20,7 @@ public class OrderDto {
                 orders.getTotalAmount(),
                 orders.getDiscountAmount(),
                 orders.isFreeContent(),
-                orders.getBook().getBookId(),
+                orders.getBookIds(),
                 orders.getUser().getUserId()
         );
     }
