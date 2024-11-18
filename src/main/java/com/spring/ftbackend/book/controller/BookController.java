@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -129,15 +130,16 @@ public class BookController {
                     )
             )
     )
+
     @PostMapping("/bookContent")
     public ResponseEntity<List<BookPage>> bookContent(@RequestBody Map<String, Long> request) {
         //bookname으로 bookId 찾기
 //        Long bookId = bookService.findBookIdByBookName(request.get("bookName"));
-        Long bookId = request.get("bookId");
+//        Long bookId = request.get("bookId");
 //        System.out.println(bookId);
-        List<BookPage> bookPages = bookPagesRepository.findByBook_BookId(bookId);
+//        List<BookPage> bookPages = bookPagesRepository.findByBook_BookId(bookId);
 //        System.out.println(bookPages.toString());
-        return ResponseEntity.ok(bookPages);
+        return ResponseEntity.ok(bookService.bookContent(request.get("bookId")));
     }
 
     @Operation(summary = "morebooks에서 유저에 책 추가",

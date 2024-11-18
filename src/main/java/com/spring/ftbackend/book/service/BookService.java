@@ -11,6 +11,7 @@ import com.spring.ftbackend.user.repository.UserRepository;
 import com.spring.ftbackend.AI.openAI.service.OpenAiService;
 import com.spring.ftbackend.s3.service.S3UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -125,6 +126,7 @@ public class BookService {
     }
 
     // 사용자가 갖고 있는 책 리스트 반환
+    @Cacheable(value = "userBooksCache", key = "#userId")
     public List<BookDto> BookDtoList(Long userId) {
         List<Book> Book = userBooksRepository.findBooksByUserId(userId);
         List<BookDto> collect = Book.stream().map(fields -> {
@@ -204,4 +206,9 @@ public class BookService {
         return bookRepository.findById(bookId).get().getBookDescription();
     }
 
+    // List<bookPages> 반환 메소드
+    @Cacheable(value = "bookPagesCache", key = "#bookId")
+    public List<BookPage> bookContent(Long bookId){
+        return bookPagesRepository.findByBook_BookId(bookId);
+    }
 }

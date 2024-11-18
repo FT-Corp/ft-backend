@@ -9,6 +9,7 @@ import com.spring.ftbackend.user.repository.UserRepository;
 import com.spring.ftbackend.user.domain.User;
 import com.spring.ftbackend.user.dto.UserRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -70,7 +71,10 @@ public class UserService {
         return Optional.empty();
     }
 
+
     // user_books 테이블에 책을 추가하는 메서드
+    // addBookToUser 사용시 cache 초기화. booklist 호출시 DB에서 다시 가져오고 캐싱
+    @CacheEvict(value = "userBooksCache", key = "#userId")
     public void addBookToUser(Long id, String bookName) {
         User user = userRepository.findById(id).orElse(null);
         Book book = bookRepository.findByBookName(bookName).orElse(null);
