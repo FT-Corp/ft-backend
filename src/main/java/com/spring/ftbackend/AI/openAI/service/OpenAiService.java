@@ -50,6 +50,8 @@ public class OpenAiService {
         }
         catch (Exception e) {
         }
+
+        // OpenAI API 호출
         String url = "https://api.openai.com/v1/images/generations";
         RestTemplate restTemplate = new RestTemplate();
 

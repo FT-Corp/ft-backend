@@ -1,5 +1,6 @@
 package com.spring.ftbackend.book.controller;
 
+import com.spring.ftbackend.book.domain.Book;
 import com.spring.ftbackend.book.repository.BookPagesRepository;
 import com.spring.ftbackend.book.domain.BookPage;
 import com.spring.ftbackend.book.dto.BookDto;
@@ -27,6 +28,8 @@ public class BookController {
     private UserService userService;
     @Autowired
     private BookPagesRepository bookPagesRepository;
+    @Autowired
+    private com.spring.ftbackend.book.repository.BookRepository bookRepository;
 
     @Operation(summary = "테스트")
     @GetMapping("/")
@@ -64,6 +67,29 @@ public class BookController {
         response.put("bookId", bookService.findBookIdByBookName(bookName));
         return ResponseEntity.ok(response);
 
+    }
+
+    @Operation(summary = "책 표지만 생성",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{ \"bookName\": \"데미안\", \"author\": \"헤르만 헤세\" }")
+                    )
+            )
+    )
+    @PostMapping("/bookCover")
+    public ResponseEntity<String> bookCover(@RequestBody Map<String, String> request) throws IOException {
+        String bookName = request.get("bookName");
+        String author = request.get("author");
+
+        String imageUrl = bookService.bookCoverMake(bookName,author);
+
+        // 책의 상태를 CREATED로 변경, 책 요약 저장
+        Book book = bookRepository.findByBookName(bookName).get();
+        book.setBookPageStatus(Book.BookPageStatus.CREATED);
+        bookRepository.save(book);
+
+        return ResponseEntity.ok(imageUrl);
     }
 
 
